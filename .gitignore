@@ -13,3 +13,5 @@ temp_edge_*
 # Node
 node_modules/
 npm-debug.log*
+
+.vercel
