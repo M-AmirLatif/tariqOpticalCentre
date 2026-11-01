@@ -1,0 +1,15 @@
+# OS Files
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# Temporary Browser / Test Data
+temp_edge_*
+.system_generated/
+
+# Vercel
+.vercel
+
+# Node
+node_modules/
+npm-debug.log*

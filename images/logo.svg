@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100" aria-label="طارق آپٹیکل سنٹر لوگو">
+  <defs>
+    <linearGradient id="brassGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E5BE6C" />
+      <stop offset="50%" stop-color="#C8963E" />
+      <stop offset="100%" stop-color="#9E6F22" />
+    </linearGradient>
+    <radialGradient id="tealIris" cx="45%" cy="45%" r="55%">
+      <stop offset="0%" stop-color="#4CE0DB" />
+      <stop offset="60%" stop-color="#2BB5B0" />
+      <stop offset="100%" stop-color="#0E585D" />
+    </radialGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-opacity="0.2"/>
+    </filter>
+  </defs>
+  <!-- Outer Brass Ring -->
+  <circle cx="50" cy="50" r="46" fill="none" stroke="url(#brassGrad)" stroke-width="5" filter="url(#shadow)"/>
+  
+  <!-- Outer Brass decorative thin inner ring -->
+  <circle cx="50" cy="50" r="41" fill="#0E3B43" fill-opacity="0.06"/>
+  
+  <!-- Almond Eye Shape (White) -->
+  <path d="M 12 50 C 24 30, 76 30, 88 50 C 76 70, 24 70, 12 50 Z" fill="#FFFFFF" stroke="#0E3B43" stroke-width="1.5" filter="url(#shadow)"/>
+  
+  <!-- Teal Iris -->
+  <circle cx="50" cy="50" r="17.5" fill="url(#tealIris)"/>
+  
+  <!-- Iris Pattern Ring -->
+  <circle cx="50" cy="50" r="17.5" fill="none" stroke="#0E3B43" stroke-width="0.8" stroke-opacity="0.3"/>
+  <circle cx="50" cy="50" r="13.5" fill="none" stroke="#FFFFFF" stroke-dasharray="1.5, 2.5" stroke-width="0.75" stroke-opacity="0.5"/>
+  
+  <!-- Dark Pupil -->
+  <circle cx="50" cy="50" r="8.5" fill="#0E3B43"/>
+  
+  <!-- White Light Highlight -->
+  <circle cx="45" cy="45" r="3.2" fill="#FFFFFF"/>
+  <circle cx="53" cy="53" r="1.2" fill="#FFFFFF" fill-opacity="0.8"/>
+</svg>

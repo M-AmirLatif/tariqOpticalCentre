@@ -1,0 +1,4 @@
+image_path,category,code,name,brand,color,gender,condition,stock,price,material,shape,size,weight,flexible,lensColor,polarized,uv,frameMaterial,shapeMirror,useFor,lensType,index,coating,powerRange,thickness,pairNote,kind,quantity,note,featured,needs_review
+images/frames/sample.jpg,frame,F-103,ٹائٹینیم سلور فریم,Titan,سلور,مردانہ,نیا,موجود ہے,2500,ٹائٹینیم,گول,50-18-140,بہت ہلکا,ہاں,,,,,,,,,,,,,,پریمیم کوالٹی,false,
+images/sun/sample.jpg,sun,S-203,اسپورٹس پولرائزڈ سن گلاسز,Speed,کالا,مردانہ,نیا,موجود ہے,1900,,,,,,کالا,ہاں,UV400,TR90,,,,,,,,,,,بائیک سواری کے لیے بہترین,false,
+images/lenses/sample.jpg,lens,L-305,پروگریسو ملٹی فوکل لینز,Vision,بے رنگ,سب کے لیے,نیا,موجود ہے,0,,,,,,,,,,,پروگریسو,1.61,اینٹی گلیئر,-6.00 تا +3.00,انتہائی پتلا,ایک جوڑی کی قیمت,,,دور اور نزدیک دونوں کے لیے,false,
