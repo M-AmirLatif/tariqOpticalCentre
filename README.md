@@ -204,6 +204,17 @@ The following items were populated as sensible defaults and are ready for the ow
      - `F-101`: Size `53-16-143`, Black & Blue.
      - `F-102`: Size `53-16-145`, Black.
      - `F-103`: Size `55-13-143`, Model `9516`, Double-Bridge Navigator with 180° flexible hinges (180 ڈگری فلیکسیبل پریمیم کوالٹی).
+   - `F-104` through `F-113` (10 New 180° Premium Quality Frames in sequence):
+     - `F-104`: Model `9840`, Size `49`, Side `142`, Price `Rs 950`, Ruby Red (`images/frames/first.webp`).
+     - `F-105`: Model `6168`, Size `52`, Side `141`, Price `Rs 950`, Amber/Brown (`images/frames/second.webp`).
+     - `F-106`: Model `A091`, Size `44`, Side `123`, Price `Rs 950`, Honey Gold (`images/frames/third.webp`).
+     - `F-107`: Model `A021` Baby, Size `43`, Side `126`, Price `Rs 950`, Chocolate Tortoise (`images/frames/fouth.webp`).
+     - `F-108`: Model `019`, Size `44`, Side `126`, Price `Rs 950`, Glossy Black (`images/frames/fifth.webp`).
+     - `F-109`: Model `9508`, Size `50`, Side `145`, Price `Rs 950`, Royal Blue Cat-Eye (`images/frames/sixth.webp`).
+     - `F-110`: Model `3021`, Size `46`, Side `142`, Price `Rs 950`, Ocean Blue Round (`images/frames/seventh.webp`).
+     - `F-111`: Model `4021`, Size `53`, Side `145`, Price `Rs 950`, Pastel Pink Square (`images/frames/eight.webp`).
+     - `F-112`: Model `822`, Size `48`, Side `140`, Price `Rs 950`, Black/Clear Fade (`images/frames/ninth.webp`).
+     - `F-113`: Model `6210`, Size `47`, Side `137`, Price `Rs 950`, Blue/Clear Two-Tone Round (`images/frames/tenth.webp`).
    - `L-301` through `L-304` (HC Hardcoat, HAI FAI DriveSafe, Photochromic, World Vision): Extracted exact specifications (index 1.56, coatings, power ranges) from the user's lens packet photos. Prices set to `0` ("قیمت واٹس ایپ پر پوچھیں") until owner specifies retail pricing.
 2. **Sample Photos for Empty Folders**:
    - `images/sun/` (S-201 Aviator, S-202 Wayfarer)
