@@ -989,6 +989,14 @@
         dom.cartBarTotal.innerHTML = hasUnpriced 
           ? `Rs <span class="num">${totalPrice.toLocaleString('en-US')}</span>`
           : `Rs <span class="num">${totalPrice.toLocaleString('en-US')}</span>`;
+
+        // Dynamically compute exact cart bar height for floating elements
+        requestAnimationFrame(() => {
+          if (dom.stickyCartBar) {
+            const barH = dom.stickyCartBar.offsetHeight || 88;
+            document.documentElement.style.setProperty('--cart-bar-height', `${barH}px`);
+          }
+        });
       } else {
         dom.stickyCartBar.classList.remove('active');
         document.body.classList.remove('cart-active');
@@ -1669,6 +1677,14 @@
       if (state.lightbox.isOpen) {
         if (e.key === 'ArrowRight') prevLightbox();
         if (e.key === 'ArrowLeft') nextLightbox();
+      }
+    });
+
+    // Recalculate sticky bar height on resize
+    window.addEventListener('resize', () => {
+      if (dom.stickyCartBar && document.body.classList.contains('cart-active')) {
+        const barH = dom.stickyCartBar.offsetHeight || 88;
+        document.documentElement.style.setProperty('--cart-bar-height', `${barH}px`);
       }
     });
 

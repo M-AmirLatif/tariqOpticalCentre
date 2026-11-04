@@ -2044,7 +2044,8 @@ textarea.form-control {
   position: fixed;
   bottom: 20px;
   bottom: calc(20px + env(safe-area-inset-bottom));
-  left: 18px; /* Left side in RTL */
+  right: 20px;
+  left: auto;
   z-index: 100;
   width: 58px;
   height: 58px;
@@ -2057,8 +2058,20 @@ textarea.form-control {
   box-shadow: 0 6px 20px rgba(31, 168, 85, 0.45);
   cursor: pointer;
   border: 2px solid #FFFFFF;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, bottom 0.25s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, bottom 0.28s cubic-bezier(0.16, 1, 0.3, 1), right 0.2s ease;
   text-decoration: none;
+}
+
+@media (max-width: 768px) {
+  .floating-wa-btn {
+    right: 16px;
+    width: 54px;
+    height: 54px;
+  }
+  .floating-wa-btn svg {
+    width: 28px;
+    height: 28px;
+  }
 }
 
 .floating-wa-btn:hover {
@@ -2074,7 +2087,7 @@ textarea.form-control {
 
 /* Adjust floating WA position smoothly above the bottom cart bar when cart is active */
 body.cart-active .floating-wa-btn {
-  bottom: calc(76px + env(safe-area-inset-bottom));
+  bottom: calc(var(--cart-bar-height, 90px) + 16px + env(safe-area-inset-bottom));
 }
 
 /* Hide floating WA only when modal is open to avoid visual clashes */
