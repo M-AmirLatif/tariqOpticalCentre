@@ -2109,16 +2109,23 @@ body.cart-active .floating-wa-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.6rem;
-  font-weight: 700;
-  line-height: 1;
-  padding: 0 0.5rem;
-  min-width: 44px;
-  height: 44px;
+  background: var(--card) !important;
+  color: var(--heading) !important;
+  border: 1.5px solid var(--line) !important;
+  border-radius: 50% !important;
+  padding: 0;
+  width: 40px !important;
+  height: 40px !important;
+  min-width: 40px !important;
+  min-height: 40px !important;
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
 }
 
 @media (min-width: 992px) {
-  .menu-toggle-btn {
+  .menu-toggle-btn,
+  .header-actions .menu-toggle-btn,
+  .site-header .menu-toggle-btn {
     display: none !important;
   }
 }
@@ -2800,6 +2807,11 @@ html, body {
 }
 
 /* Header & Navbar Desktop Tuning */
+.site-header .container {
+  max-width: 1440px !important;
+  padding: 0 1.25rem !important;
+}
+
 .header-content {
   flex-wrap: nowrap !important;
 }
@@ -2807,16 +2819,45 @@ html, body {
 .desktop-nav {
   gap: 0.35rem !important;
   margin: 0 0.5rem !important;
+  flex: 1 1 auto;
+  justify-content: center;
 }
 
 .nav-link {
   font-size: 0.9rem !important;
   padding: 0.35rem 0.5rem !important;
+  white-space: nowrap !important;
 }
 
 .header-actions {
   flex-shrink: 0 !important;
   gap: 0.45rem !important;
+}
+
+@media (min-width: 992px) and (max-width: 1220px) {
+  .site-header .conf-phone-primary .btn-text-full {
+    display: none !important;
+  }
+  .site-header .conf-phone-primary .btn-text-short {
+    display: inline !important;
+  }
+  .desktop-nav {
+    gap: 0.2rem !important;
+    margin: 0 0.25rem !important;
+  }
+  .nav-link {
+    font-size: 0.84rem !important;
+    padding: 0.3rem 0.35rem !important;
+  }
+}
+
+@media (min-width: 1221px) {
+  .site-header .conf-phone-primary .btn-text-full {
+    display: inline !important;
+  }
+  .site-header .conf-phone-primary .btn-text-short {
+    display: none !important;
+  }
 }
 
 /* Theme Toggle Button Permanent Prominence */
@@ -3086,7 +3127,7 @@ html, body {
   align-items: center !important;
 }
 
-.header-actions .btn {
+.header-actions .btn:not(.menu-toggle-btn) {
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
