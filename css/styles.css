@@ -934,26 +934,44 @@ img {
 /* Main Category Tabs */
 .category-tabs-scroll {
   display: flex;
+  flex-wrap: wrap;
   gap: 0.5rem;
-  overflow-x: auto;
-  padding-bottom: 4px;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: thin;
+  overflow-x: visible;
+  justify-content: center;
+  padding: 0.25rem 0;
 }
 
 .tab-btn {
   background: var(--bg);
   color: var(--text);
   border: 1px solid var(--line);
-  padding: 0.5rem 1.15rem;
+  padding: 0.5rem 1rem;
   border-radius: var(--radius-pill);
   font-family: var(--font-body);
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 700;
   white-space: nowrap;
   cursor: pointer;
   transition: all 0.2s ease;
-  min-height: 44px;
+  min-height: 42px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+@media (max-width: 600px) {
+  .category-tabs-scroll {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 0.5rem !important;
+  }
+  .tab-btn {
+    width: 100% !important;
+    padding: 0.55rem 0.5rem !important;
+    font-size: 0.92rem !important;
+    min-height: 44px !important;
+  }
 }
 
 .tab-btn.active, .tab-btn[aria-selected="true"] {
@@ -965,10 +983,11 @@ img {
 /* Subcategory Chips Row */
 .subcat-chips-row {
   display: flex;
+  flex-wrap: wrap;
   gap: 0.4rem;
-  overflow-x: auto;
-  padding-bottom: 4px;
-  -webkit-overflow-scrolling: touch;
+  overflow-x: visible;
+  justify-content: center;
+  padding: 0.35rem 0;
 }
 
 .chip-btn {
@@ -3096,23 +3115,10 @@ html, body {
 
 /* Mobile Filter Controls Tuning */
 @media (max-width: 600px) {
-  .filter-dropdowns-row {
-    display: grid !important;
-    grid-template-columns: 1fr 1fr !important;
-    gap: 0.5rem !important;
-  }
-  .filter-select {
-    width: 100% !important;
-    font-size: 0.88rem !important;
-    padding: 0.45rem 0.55rem !important;
-  }
   .filter-actions-row {
     display: flex !important;
     flex-direction: column !important;
     gap: 0.5rem !important;
-  }
-  .filter-actions-row .filter-select {
-    width: 100% !important;
   }
 }
 
@@ -3237,10 +3243,12 @@ html, body {
   appearance: none !important;
   -webkit-appearance: none !important;
   -moz-appearance: none !important;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%232BB5B0' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E") !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%232BB5B0' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E") !important;
   background-repeat: no-repeat !important;
-  background-position: left 0.75rem center !important;
-  padding: 0 0.85rem 0 1.85rem !important;
+  background-position: right 0.85rem center !important;
+  padding: 0 2.2rem 0 0.85rem !important;
+  direction: rtl !important;
+  text-align: right !important;
   cursor: pointer !important;
   box-shadow: var(--shadow-sm);
   text-overflow: ellipsis !important;
