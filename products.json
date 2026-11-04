@@ -619,5 +619,59 @@
       "flexible": "ہاں (180° لچکدار پریمیم کوالٹی)",
       "note": "ماڈل 6210 - 180 ڈگری فلیکسیبل پریمیم کوالٹی راؤنڈ فریم، سائز 47، ڈنڈی کی لمبائی 137"
     }
+  },
+  {
+    "id": 24,
+    "cat": "frame",
+    "code": "F-114",
+    "type": "چوکور",
+    "name": "ٹی آر آئی ویئر فریم 45102",
+    "price": 1650,
+    "gender": "سب کے لیے",
+    "img": "images/frames/eleventh.webp",
+    "stock": "موجود ہے",
+    "inStock": true,
+    "featured": true,
+    "specs": {
+      "code": "F-114",
+      "brand": "TR. Eye wear",
+      "color": "فیروزی اور شفاف گرے",
+      "gender": "سب کے لیے",
+      "condition": "نیا",
+      "stock": "موجود ہے",
+      "material": "پلاسٹک (TR90)",
+      "shape": "چوکور",
+      "size": "50-18-145",
+      "weight": "ہلکا اور آرام دہ",
+      "flexible": "ہاں (TR فلیکسیبل)",
+      "note": "ماڈل 45102 - ٹی آر آئی ویئر، سائز 50، ڈنڈی کی لمبائی 145"
+    }
+  },
+  {
+    "id": 25,
+    "cat": "frame",
+    "code": "F-115",
+    "type": "چوکور",
+    "name": "ٹام فورڈ پریمیم فریم 8803",
+    "price": 6250,
+    "gender": "مردانہ",
+    "img": "images/frames/12th.webp",
+    "stock": "موجود ہے",
+    "inStock": true,
+    "featured": true,
+    "specs": {
+      "code": "F-115",
+      "brand": "Tom Ford (S H)",
+      "color": "کالا اور امبر ٹورٹوائز",
+      "gender": "مردانہ",
+      "condition": "نیا",
+      "stock": "موجود ہے",
+      "material": "اعلیٰ ایسیٹیٹ (Acetate)",
+      "shape": "چوکور",
+      "size": "53-17-150",
+      "weight": "لگژری و مضبوط",
+      "flexible": "پریمیم ہنجز",
+      "note": "ماڈل 8803 - ٹام فورڈ لگژری ڈیزائنر فریم، سائز 53، ڈنڈی کی لمبائی 150"
+    }
   }
 ]
