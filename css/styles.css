@@ -2174,10 +2174,13 @@ body.cart-active .floating-wa-btn {
   inset: 0;
   background: rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
   z-index: 1000;
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.3s ease;
+  touch-action: none !important;
+  overscroll-behavior: none !important;
 }
 
 .mobile-nav-backdrop.active {
@@ -2202,7 +2205,33 @@ body.cart-active .floating-wa-btn {
   display: flex;
   flex-direction: column;
   overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  overscroll-behavior-y: contain;
+  touch-action: pan-y;
+  scroll-behavior: smooth;
   border-left: 2px solid var(--line);
+  will-change: transform;
+}
+
+.mobile-nav-drawer::-webkit-scrollbar {
+  width: 4px;
+}
+.mobile-nav-drawer::-webkit-scrollbar-track {
+  background: transparent;
+}
+.mobile-nav-drawer::-webkit-scrollbar-thumb {
+  background: var(--line);
+  border-radius: 4px;
+}
+
+html.drawer-locked,
+body.drawer-locked {
+  overflow: hidden !important;
+  overscroll-behavior: none !important;
+  touch-action: none !important;
+  height: 100% !important;
 }
 
 .mobile-nav-drawer.active {
@@ -2269,7 +2298,8 @@ body.cart-active .floating-wa-btn {
 .drawer-nav {
   display: flex;
   flex-direction: column;
-  padding: 0.75rem 0;
+  padding: 0.75rem 0 calc(3rem + env(safe-area-inset-bottom));
+  overscroll-behavior: contain;
 }
 
 .drawer-link {

@@ -722,6 +722,8 @@
     if (dom.menuToggleBtn) {
       dom.menuToggleBtn.setAttribute('aria-expanded', 'true');
     }
+    document.documentElement.classList.add('drawer-locked');
+    document.body.classList.add('drawer-locked');
     document.body.style.overflow = 'hidden';
   }
 
@@ -736,6 +738,8 @@
     if (dom.menuToggleBtn) {
       dom.menuToggleBtn.setAttribute('aria-expanded', 'false');
     }
+    document.documentElement.classList.remove('drawer-locked');
+    document.body.classList.remove('drawer-locked');
     document.body.style.overflow = '';
   }
 
@@ -1314,6 +1318,14 @@
     }
     if (dom.mobileNavBackdrop) {
       dom.mobileNavBackdrop.addEventListener('click', closeDrawer);
+      dom.mobileNavBackdrop.addEventListener('touchmove', (e) => {
+        e.preventDefault();
+      }, { passive: false });
+    }
+    if (dom.mobileNavDrawer) {
+      dom.mobileNavDrawer.addEventListener('touchmove', (e) => {
+        e.stopPropagation();
+      }, { passive: true });
     }
 
     // Drawer, Desktop Nav and Internal Anchor Smooth Scrolling
