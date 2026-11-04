@@ -138,6 +138,19 @@ html {
   -webkit-text-size-adjust: 100%;
 }
 
+/* Offset sticky topbar so sections land with breathing room */
+section[id],
+#prescription-card-box,
+#browse-section,
+#order-section,
+#gallery-section,
+#services-section,
+#about-section,
+#visit-section,
+#top {
+  scroll-margin-top: calc(var(--header-height) + 1.25rem);
+}
+
 body {
   font-family: var(--font-body);
   font-size: 1.125rem; /* ~18px readable body */

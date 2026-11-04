@@ -1312,15 +1312,26 @@
       dom.mobileNavBackdrop.addEventListener('click', closeDrawer);
     }
 
-    // Drawer and Desktop Nav category links
-    document.querySelectorAll('.drawer-link, .nav-link').forEach(link => {
+    // Drawer, Desktop Nav and Internal Anchor Smooth Scrolling
+    document.querySelectorAll('.drawer-link, .nav-link, a[href^="#"]').forEach(link => {
       link.addEventListener('click', (e) => {
+        const href = link.getAttribute('href');
+        if (!href || !href.startsWith('#')) return;
+        const targetId = href.slice(1);
+        if (!targetId) return;
+
         const cat = link.getAttribute('data-cat');
         if (cat) {
-          e.preventDefault();
           setCategory(cat);
-          const browseSec = document.getElementById('browse-section');
-          if (browseSec) browseSec.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        const targetEl = document.getElementById(targetId);
+        if (targetEl) {
+          e.preventDefault();
+          targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          if (history.pushState) {
+            history.pushState(null, null, `#${targetId}`);
+          }
         }
         closeDrawer();
       });
