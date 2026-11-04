@@ -105,6 +105,22 @@
     modalCardPreviewImg: document.getElementById('modal-card-preview-img'),
     modalWhatsappAgainBtn: document.getElementById('modal-whatsapp-again-btn'),
     modalReminderCloseBtn: document.getElementById('modal-reminder-close-btn'),
+    // Dedicated Order / Cart Modal
+    orderModalOverlay: document.getElementById('order-modal-overlay'),
+    orderModalCloseBtn: document.getElementById('order-modal-close-btn'),
+    modalCartItemsList: document.getElementById('modal-cart-items-list'),
+    modalCartTotalBar: document.getElementById('modal-cart-total-bar'),
+    modalCartItemCount: document.getElementById('modal-cart-item-count'),
+    modalOrderForm: document.getElementById('modal-order-form'),
+    modalOrderSuccess: document.getElementById('modal-order-success'),
+    modalOrderDoneBtn: document.getElementById('modal-order-done-btn'),
+    modalPrescriptionInput: document.getElementById('modal-prescription-input'),
+    modalUploadZone: document.getElementById('modal-upload-zone'),
+    modalUploadPlaceholder: document.getElementById('modal-upload-placeholder'),
+    modalUploadPreview: document.getElementById('modal-upload-preview'),
+    modalPreviewImg: document.getElementById('modal-preview-img'),
+    modalPreviewFilename: document.getElementById('modal-preview-filename'),
+    modalRemovePrescBtn: document.getElementById('modal-remove-presc-btn'),
     // Lightbox
     lightboxOverlay: document.getElementById('lightbox-overlay'),
     lightboxCloseBtn: document.getElementById('lightbox-close-btn'),
@@ -764,15 +780,20 @@
     const reader = new FileReader();
     reader.onload = (e) => {
       state.prescriptionImage = e.target.result;
-      if (dom.prescriptionPreviewImg) {
-        dom.prescriptionPreviewImg.src = e.target.result;
-      }
-      if (dom.previewFilename) {
-        dom.previewFilename.textContent = `${file.name} (${Math.round(file.size / 1024)} KB)`;
-      }
+      const sizeStr = `${file.name} (${Math.round(file.size / 1024)} KB)`;
+
+      // Page Elements
+      if (dom.prescriptionPreviewImg) dom.prescriptionPreviewImg.src = e.target.result;
+      if (dom.previewFilename) dom.previewFilename.textContent = sizeStr;
       if (dom.uploadPlaceholder) dom.uploadPlaceholder.style.display = 'none';
       if (dom.uploadPreview) dom.uploadPreview.style.display = 'flex';
       if (dom.prescriptionCardBox) dom.prescriptionCardBox.classList.add('has-file');
+
+      // Modal Elements
+      if (dom.modalPreviewImg) dom.modalPreviewImg.src = e.target.result;
+      if (dom.modalPreviewFilename) dom.modalPreviewFilename.textContent = sizeStr;
+      if (dom.modalUploadPlaceholder) dom.modalUploadPlaceholder.style.display = 'none';
+      if (dom.modalUploadPreview) dom.modalUploadPreview.style.display = 'flex';
 
       updateCartUI();
     };
@@ -782,11 +803,19 @@
   function clearPrescriptionFile() {
     state.prescriptionImage = null;
     state.prescriptionFile = null;
+
+    // Page Elements
     if (dom.prescriptionInput) dom.prescriptionInput.value = '';
     if (dom.prescriptionPreviewImg) dom.prescriptionPreviewImg.src = '';
     if (dom.uploadPlaceholder) dom.uploadPlaceholder.style.display = 'flex';
     if (dom.uploadPreview) dom.uploadPreview.style.display = 'none';
     if (dom.prescriptionCardBox) dom.prescriptionCardBox.classList.remove('has-file');
+
+    // Modal Elements
+    if (dom.modalPrescriptionInput) dom.modalPrescriptionInput.value = '';
+    if (dom.modalPreviewImg) dom.modalPreviewImg.src = '';
+    if (dom.modalUploadPlaceholder) dom.modalUploadPlaceholder.style.display = 'flex';
+    if (dom.modalUploadPreview) dom.modalUploadPreview.style.display = 'none';
 
     updateCartUI();
   }
@@ -800,6 +829,143 @@
       dom.modalWhatsappAgainBtn.href = waUrl;
     }
     dom.cardReminderModal.style.display = 'flex';
+  }
+
+  // Dedicated Order / Cart Modal Controls
+  function openOrderModal() {
+    if (dom.orderModalOverlay) {
+      dom.orderModalOverlay.style.display = 'flex';
+      void dom.orderModalOverlay.offsetWidth;
+      dom.orderModalOverlay.classList.add('active');
+      document.documentElement.classList.add('order-modal-open');
+      document.body.classList.add('order-modal-open');
+
+      // Sync inputs from page to modal if user already typed on page
+      const pageName = document.getElementById('order-name');
+      const modalName = document.getElementById('modal-order-name');
+      if (pageName && modalName && pageName.value && !modalName.value) {
+        modalName.value = pageName.value;
+      }
+      const pagePhone = document.getElementById('order-phone');
+      const modalPhone = document.getElementById('modal-order-phone');
+      if (pagePhone && modalPhone && pagePhone.value && !modalPhone.value) {
+        modalPhone.value = pagePhone.value;
+      }
+      const pageAddr = document.getElementById('order-address');
+      const modalAddr = document.getElementById('modal-order-address');
+      if (pageAddr && modalAddr && pageAddr.value && !modalAddr.value) {
+        modalAddr.value = pageAddr.value;
+      }
+      const pageNote = document.getElementById('order-note');
+      const modalNote = document.getElementById('modal-order-note');
+      if (pageNote && modalNote && pageNote.value && !modalNote.value) {
+        modalNote.value = pageNote.value;
+      }
+
+      updateCartUI();
+    }
+  }
+
+  function closeOrderModal() {
+    if (dom.orderModalOverlay) {
+      dom.orderModalOverlay.classList.remove('active');
+      document.documentElement.classList.remove('order-modal-open');
+      document.body.classList.remove('order-modal-open');
+      setTimeout(() => {
+        if (!dom.orderModalOverlay.classList.contains('active')) {
+          dom.orderModalOverlay.style.display = 'none';
+        }
+      }, 280);
+    }
+  }
+
+  // Render Cart Item Cards Helper (used for both on-page cart and modal cart)
+  function renderCartCardsTo(container, totalBarEl, isModal) {
+    if (!container) return;
+    container.innerHTML = '';
+
+    const totalCount = state.cart.reduce((sum, item) => sum + item.qty, 0);
+    const totalPrice = state.cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+    const hasUnpriced = state.cart.some(item => !item.price || item.price === 0);
+
+    if (state.cart.length === 0) {
+      container.innerHTML = `
+        <div style="text-align:center; padding:1.75rem 1rem; color:var(--muted);">
+          <div style="font-size:2.8rem; margin-bottom:0.4rem;">🛒</div>
+          <p style="font-size:1.08rem; font-weight:700; color:var(--heading); margin-bottom:0.35rem;">آپ کے آرڈر میں ابھی کوئی فریم یا چشمہ شامل نہیں ہے۔</p>
+          <p style="font-size:0.92rem; margin-bottom:0.85rem;">کیٹلاگ سے فریم اور لینز منتخب کریں یا صرف اپنا نسخہ / کارڈ اپلوڈ کر کے بھی آرڈر بھیج سکتے ہیں!</p>
+          <button type="button" class="btn btn-outline" data-action="cart-browse">👓 مصنوعات دیکھیں</button>
+        </div>
+      `;
+      const browseBtn = container.querySelector('[data-action="cart-browse"]');
+      if (browseBtn) {
+        browseBtn.addEventListener('click', () => {
+          if (isModal) closeOrderModal();
+          const browseSec = document.getElementById('browse-section');
+          if (browseSec) browseSec.scrollIntoView({ behavior: 'smooth' });
+        });
+      }
+      if (totalBarEl) totalBarEl.style.display = 'none';
+      return;
+    }
+
+    if (totalBarEl) totalBarEl.style.display = 'flex';
+
+    state.cart.forEach(item => {
+      const card = document.createElement('div');
+      card.className = 'cart-item-card';
+
+      const specTags = [];
+      if (item.specs?.color) specTags.push(`<span class="cart-item-spec-pill">رنگ: ${escapeHtml(item.specs.color)}</span>`);
+      if (item.specs?.size) specTags.push(`<span class="cart-item-spec-pill">سائز: ${escapeHtml(item.specs.size)}</span>`);
+      if (item.specs?.coating) specTags.push(`<span class="cart-item-spec-pill">کوٹنگ: ${escapeHtml(item.specs.coating)}</span>`);
+
+      card.innerHTML = `
+        <div class="cart-item-header">
+          <div class="cart-item-title-col">
+            <h4 class="cart-item-name">${escapeHtml(item.name)}</h4>
+            <div class="cart-item-tags">
+              <span class="cart-item-code-tag">کوڈ: <bdi class="num" dir="ltr">${escapeHtml(item.code)}</bdi></span>
+              ${specTags.join('')}
+            </div>
+          </div>
+          <button type="button" class="cart-item-remove-btn" data-action="cart-remove" data-id="${item.id}" aria-label="${escapeHtml(item.name)} حذف کریں" title="آرڈر سے ہٹائیں">
+            🗑️
+          </button>
+        </div>
+        <div class="cart-item-bottom">
+          <div class="qty-stepper" style="height:36px;">
+            <button type="button" class="stepper-btn" style="width:30px; height:30px; font-size:1.15rem;" data-action="cart-dec" data-id="${item.id}">−</button>
+            <span class="stepper-num num" style="min-width:28px; font-size:1rem;">${item.qty}</span>
+            <button type="button" class="stepper-btn" style="width:30px; height:30px; font-size:1.15rem;" data-action="cart-inc" data-id="${item.id}">+</button>
+          </div>
+          <div class="cart-item-price-col">
+            ${item.price > 0 ? `
+              <span class="cart-item-rate-text"><bdi class="num">${item.qty}</bdi> × <bdi class="num">Rs ${item.price.toLocaleString('en-US')}</bdi></span>
+              <span class="cart-item-total-text num" dir="ltr">Rs ${(item.price * item.qty).toLocaleString('en-US')}</span>
+            ` : `
+              <span class="cart-item-total-text" style="font-size:0.95rem;">قیمت رابطہ پر طے ہوگی</span>
+            `}
+          </div>
+        </div>
+      `;
+
+      card.querySelector('[data-action="cart-dec"]').addEventListener('click', () => updateCartQty(item.id, -1));
+      card.querySelector('[data-action="cart-inc"]').addEventListener('click', () => updateCartQty(item.id, 1));
+      card.querySelector('[data-action="cart-remove"]').addEventListener('click', () => removeFromCart(item.id));
+
+      container.appendChild(card);
+    });
+
+    if (totalBarEl) {
+      totalBarEl.innerHTML = `
+        <div class="cart-total-row">
+          <span>کل رقم (Total Amount):</span>
+          <span class="num" dir="ltr">Rs ${totalPrice.toLocaleString('en-US')}</span>
+        </div>
+        ${hasUnpriced ? `<div style="font-size:0.85rem; color:var(--muted); margin-top:3px;">* بغیر قیمت والے آئٹمز کی قیمت واٹس ایپ پر طے ہوگی۔</div>` : ''}
+      `;
+    }
   }
 
   // Update Cart UI everywhere
@@ -821,7 +987,7 @@
         document.body.classList.add('cart-active');
         dom.cartBarCount.innerHTML = `آپ کے آرڈر میں: <span class="num">${totalCount}</span> چشمے/آئٹمز`;
         dom.cartBarTotal.innerHTML = hasUnpriced 
-          ? `کل: Rs <span class="num">${totalPrice.toLocaleString('en-US')}</span> <small style="font-size:0.8rem; color:var(--muted);">(+ بغیر قیمت والے آئٹمز)</small>`
+          ? `کل: Rs <span class="num">${totalPrice.toLocaleString('en-US')}</span>`
           : `کل رقم: Rs <span class="num">${totalPrice.toLocaleString('en-US')}</span>`;
       } else {
         dom.stickyCartBar.classList.remove('active');
@@ -834,97 +1000,48 @@
       dom.drawerCartCount.textContent = totalCount;
     }
 
+    // Update Modal Cart Count Badge
+    if (dom.modalCartItemCount) {
+      dom.modalCartItemCount.textContent = `${totalCount} آئٹمز منتخب`;
+    }
+
     const hasCard = state.prescriptionImage !== null;
     const canSubmit = totalCount > 0 || hasCard;
-    const orderSubmitBtn = dom.orderForm ? dom.orderForm.querySelector('button[type="submit"]') : null;
 
-    if (orderSubmitBtn) {
+    // Update Submit buttons in both forms
+    const submitBtns = [
+      dom.orderForm ? dom.orderForm.querySelector('button[type="submit"]') : null,
+      dom.modalOrderForm ? dom.modalOrderForm.querySelector('button[type="submit"]') : null
+    ];
+
+    submitBtns.forEach(btn => {
+      if (!btn) return;
       if (canSubmit) {
-        orderSubmitBtn.disabled = false;
-        orderSubmitBtn.classList.remove('btn-order-disabled');
-        orderSubmitBtn.classList.add('btn-order-active');
-        orderSubmitBtn.style.opacity = '1';
-        orderSubmitBtn.style.cursor = 'pointer';
+        btn.disabled = false;
+        btn.classList.remove('btn-order-disabled');
+        btn.classList.add('btn-order-active');
+        btn.style.opacity = '1';
+        btn.style.cursor = 'pointer';
         if (totalCount > 0 && hasCard) {
-          orderSubmitBtn.innerHTML = '<span>✅</span> <span>فریم، لینز اور کارڈ واٹس ایپ پر بھیجیں</span>';
+          btn.innerHTML = '<span>✅</span> <span>فریم، لینز اور کارڈ واٹس ایپ پر بھیجیں</span>';
         } else if (hasCard) {
-          orderSubmitBtn.innerHTML = '<span>✅</span> <span>آنکھوں کا کارڈ واٹس ایپ پر بھیجیں</span>';
+          btn.innerHTML = '<span>✅</span> <span>آنکھوں کا کارڈ واٹس ایپ پر بھیجیں</span>';
         } else {
-          orderSubmitBtn.innerHTML = '<span>✅</span> <span>واٹس ایپ پر آرڈر بھیجیں</span>';
+          btn.innerHTML = '<span>✅</span> <span>واٹس ایپ پر آرڈر بھیجیں</span>';
         }
       } else {
-        orderSubmitBtn.disabled = true;
-        orderSubmitBtn.classList.remove('btn-order-active');
-        orderSubmitBtn.classList.add('btn-order-disabled');
-        orderSubmitBtn.style.opacity = '1';
-        orderSubmitBtn.style.cursor = 'not-allowed';
-        orderSubmitBtn.innerHTML = '<span>🛒</span> <span>پہلے پروڈکٹ منتخب کریں یا کارڈ اپلوڈ کریں</span>';
+        btn.disabled = true;
+        btn.classList.remove('btn-order-active');
+        btn.classList.add('btn-order-disabled');
+        btn.style.opacity = '1';
+        btn.style.cursor = 'not-allowed';
+        btn.innerHTML = '<span>🛒</span> <span>پہلے پروڈکٹ منتخب کریں یا کارڈ اپلوڈ کریں</span>';
       }
-    }
+    });
 
-    // Render Order Section Cart Items List
-    if (dom.cartItemsList) {
-      dom.cartItemsList.innerHTML = '';
-      if (state.cart.length === 0) {
-        dom.cartItemsList.innerHTML = `
-          <div style="text-align:center; padding:1.75rem 1rem; color:var(--muted);">
-            <div style="font-size:2.4rem; margin-bottom:0.4rem;">🛒</div>
-            <p style="font-size:1.05rem; font-weight:600; color:var(--heading);">آپ کے آرڈر میں ابھی کوئی فریم یا چشمہ شامل نہیں ہے۔</p>
-            <p style="font-size:0.92rem; margin-top:0.35rem;">آپ اوپر کیٹلاگ سے فریم اور لینز منتخب کر سکتے ہیں، یا صرف اپنا نسخہ / کارڈ اپلوڈ کر کے بھی آرڈر بھیج سکتے ہیں!</p>
-            <a href="#browse-section" class="btn btn-outline" style="margin-top:0.75rem;">👓 مصنوعات دیکھیں</a>
-          </div>
-        `;
-        if (dom.cartTotalPrice) {
-          dom.cartTotalPrice.style.display = 'none';
-        }
-      } else {
-        if (dom.cartTotalPrice) {
-          dom.cartTotalPrice.style.display = 'block';
-        }
-        state.cart.forEach(item => {
-          const row = document.createElement('div');
-          row.className = 'cart-item-row';
-          
-          const specSummary = [];
-          if (item.specs?.color) specSummary.push(`رنگ: ${item.specs.color}`);
-          if (item.specs?.size) specSummary.push(`سائز: ${item.specs.size}`);
-          if (item.specs?.coating) specSummary.push(`کوٹنگ: ${item.specs.coating}`);
-
-          row.innerHTML = `
-            <div class="cart-item-info">
-              <div class="cart-item-name">${escapeHtml(item.name)}</div>
-              <div class="cart-item-meta">
-                <bdi>کوڈ:</bdi> <bdi class="num" dir="ltr">${escapeHtml(item.code)}</bdi>
-                ${specSummary.length ? ` | ${escapeHtml(specSummary.join(' | '))}` : ''}
-              </div>
-              <div style="margin-top:0.35rem; font-weight:700; color:var(--brass-dark);">
-                ${item.price > 0 ? `<span class="price-currency">روپے</span> <span class="num" dir="ltr">${item.price.toLocaleString('en-US')}</span> × ${item.qty} = <span class="num" dir="ltr">Rs ${(item.price * item.qty).toLocaleString('en-US')}</span>` : 'قیمت رابطہ پر طے ہوگی'}
-              </div>
-            </div>
-            <div class="qty-stepper" style="height:38px;">
-              <button type="button" class="stepper-btn" style="width:30px; height:30px; font-size:1.1rem;" data-action="cart-dec" data-id="${item.id}">−</button>
-              <span class="stepper-num num" style="min-width:28px; font-size:1rem;">${item.qty}</span>
-              <button type="button" class="stepper-btn" style="width:30px; height:30px; font-size:1.1rem;" data-action="cart-inc" data-id="${item.id}">+</button>
-            </div>
-            <button type="button" class="cart-item-remove-btn" data-action="cart-remove" data-id="${item.id}" aria-label="${escapeHtml(item.name)} حذف کریں">
-              🗑️
-            </button>
-          `;
-
-          row.querySelector('[data-action="cart-dec"]').addEventListener('click', () => updateCartQty(item.id, -1));
-          row.querySelector('[data-action="cart-inc"]').addEventListener('click', () => updateCartQty(item.id, 1));
-          row.querySelector('[data-action="cart-remove"]').addEventListener('click', () => removeFromCart(item.id));
-
-          dom.cartItemsList.appendChild(row);
-        });
-
-        if (dom.cartTotalPrice) {
-          dom.cartTotalPrice.innerHTML = hasUnpriced
-            ? `<div style="display:flex; justify-content:space-between; width:100%; align-items:center;"><span>کل رقم:</span> <span class="num" dir="ltr">Rs ${totalPrice.toLocaleString('en-US')}</span></div><div style="font-size:0.85rem; color:var(--muted); font-weight:normal; margin-top:4px;">* بغیر قیمت والے آئٹمز کی قیمت واٹس ایپ پر طے ہوگی۔</div>`
-            : `<div style="display:flex; justify-content:space-between; width:100%; align-items:center;"><span>کل رقم:</span> <span class="num" dir="ltr">Rs ${totalPrice.toLocaleString('en-US')}</span></div>`;
-        }
-      }
-    }
+    // Render Cart Items into both page and modal
+    renderCartCardsTo(dom.cartItemsList, dom.cartTotalPrice, false);
+    renderCartCardsTo(dom.modalCartItemsList, dom.modalCartTotalBar, true);
   }
 
   // Ask about Single Product on WhatsApp
@@ -1086,6 +1203,128 @@
         dom.orderSuccessCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
       }
       if (dom.orderForm) dom.orderForm.style.display = 'none';
+    }
+  }
+
+  // Modal Order Submission Handler
+  function handleModalOrderSubmit(e) {
+    e.preventDefault();
+
+    if (state.cart.length === 0 && !state.prescriptionImage) {
+      alert('برائے مہربانی پہلے کوئی چشمہ یا فریم منتخب کریں یا اپنے آنکھوں کا کارڈ اپلوڈ فرمائیں!');
+      return;
+    }
+
+    const nameInput = document.getElementById('modal-order-name');
+    const phoneInput = document.getElementById('modal-order-phone');
+    const addressInput = document.getElementById('modal-order-address');
+    const noteInput = document.getElementById('modal-order-note');
+
+    const nameErr = document.getElementById('err-modal-name');
+    const phoneErr = document.getElementById('err-modal-phone');
+    const addressErr = document.getElementById('err-modal-address');
+
+    let isValid = true;
+
+    if (!nameInput.value.trim()) {
+      if (nameErr) nameErr.classList.add('active');
+      nameInput.focus();
+      isValid = false;
+    } else if (nameErr) {
+      nameErr.classList.remove('active');
+    }
+
+    if (!isValidPakistaniPhone(phoneInput.value)) {
+      if (phoneErr) phoneErr.classList.add('active');
+      if (isValid) phoneInput.focus();
+      isValid = false;
+    } else if (phoneErr) {
+      phoneErr.classList.remove('active');
+    }
+
+    if (!addressInput.value.trim()) {
+      if (addressErr) addressErr.classList.add('active');
+      if (isValid) addressInput.focus();
+      isValid = false;
+    } else if (addressErr) {
+      addressErr.classList.remove('active');
+    }
+
+    if (!isValid) return;
+
+    let msg = `السلام علیکم! میں طارق آپٹیکل سنٹر سے آرڈر کرنا چاہتا ہوں۔\n\n`;
+
+    let totalNumeric = 0;
+    let hasUnpriced = false;
+
+    if (state.cart.length > 0) {
+      state.cart.forEach((item, index) => {
+        const lineNum = index + 1;
+        const code = item.code || 'N/A';
+        const color = item.specs?.color || 'عام';
+        const size = item.specs?.size || item.specs?.shape || item.specs?.coating || '';
+        const linePrice = item.price > 0 ? (item.price * item.qty) : 0;
+        if (item.price > 0) {
+          totalNumeric += linePrice;
+        } else {
+          hasUnpriced = true;
+        }
+
+        msg += `${lineNum}. ${item.name} – کوڈ ${code}\n`;
+        msg += `   رنگ: ${color}${size ? ` | تفصیل: ${size}` : ''}\n`;
+        if (item.price > 0) {
+          msg += `   تعداد: ${item.qty} × Rs ${item.price} = Rs ${linePrice}\n\n`;
+        } else {
+          msg += `   تعداد: ${item.qty} (قیمت رابطہ پر طے ہوگی)\n\n`;
+        }
+      });
+
+      msg += `------------------------------\n`;
+      if (totalNumeric > 0) {
+        msg += `کل رقم: Rs ${totalNumeric}${hasUnpriced ? ' (+ بغیر قیمت والے آئٹمز کی قیمت رابطہ پر)' : ''}\n`;
+      } else {
+        msg += `کل رقم: رابطہ پر طے ہوگی\n`;
+      }
+    } else {
+      msg += `(گاہک نے فریم و لینز کے انتخاب اور مشورے کے لیے نسخہ / کارڈ منسلک کیا ہے)\n`;
+    }
+
+    if (state.prescriptionImage) {
+      msg += `------------------------------\n`;
+      msg += `📋 آنکھوں کا کارڈ / نسخہ: منسلک تصویر ساتھ بھیجی جا رہی ہے\n`;
+      msg += `------------------------------\n`;
+    }
+
+    msg += `نام: ${nameInput.value.trim()}\n`;
+    msg += `فون: ${phoneInput.value.trim()}\n`;
+    msg += `پتہ: ${addressInput.value.trim()}\n`;
+    if (noteInput && noteInput.value.trim()) {
+      msg += `نوٹ: ${noteInput.value.trim()}\n`;
+    }
+
+    const waUrl = `https://wa.me/${SHOP_CONFIG.whatsappNumber}?text=${encodeURIComponent(msg)}`;
+
+    if (state.prescriptionFile && navigator.canShare && navigator.canShare({ files: [state.prescriptionFile] })) {
+      navigator.share({
+        files: [state.prescriptionFile],
+        title: 'طارق آپٹیکل سنٹر آرڈر',
+        text: msg
+      }).then(() => {
+        if (dom.modalOrderSuccess) dom.modalOrderSuccess.style.display = 'block';
+        if (dom.modalOrderForm) dom.modalOrderForm.style.display = 'none';
+      }).catch(err => {
+        window.open(waUrl, '_blank');
+        if (dom.modalOrderSuccess) dom.modalOrderSuccess.style.display = 'block';
+        if (dom.modalOrderForm) dom.modalOrderForm.style.display = 'none';
+        showCardReminderModal(waUrl);
+      });
+    } else {
+      window.open(waUrl, '_blank');
+      if (state.prescriptionImage) {
+        showCardReminderModal(waUrl);
+      }
+      if (dom.modalOrderSuccess) dom.modalOrderSuccess.style.display = 'block';
+      if (dom.modalOrderForm) dom.modalOrderForm.style.display = 'none';
     }
   }
 
@@ -1328,6 +1567,39 @@
       }, { passive: true });
     }
 
+    // Dedicated Order / Cart Modal Event Handlers
+    if (dom.orderModalCloseBtn) {
+      dom.orderModalCloseBtn.addEventListener('click', closeOrderModal);
+    }
+    if (dom.modalOrderDoneBtn) {
+      dom.modalOrderDoneBtn.addEventListener('click', closeOrderModal);
+    }
+    if (dom.orderModalOverlay) {
+      dom.orderModalOverlay.addEventListener('click', (e) => {
+        if (e.target === dom.orderModalOverlay) closeOrderModal();
+      });
+    }
+    if (dom.modalPrescriptionInput) {
+      dom.modalPrescriptionInput.addEventListener('change', (e) => {
+        const file = e.target.files && e.target.files[0];
+        if (file) handlePrescriptionFile(file);
+      });
+    }
+    if (dom.modalUploadPlaceholder) {
+      dom.modalUploadPlaceholder.addEventListener('click', () => {
+        if (dom.modalPrescriptionInput) dom.modalPrescriptionInput.click();
+      });
+    }
+    if (dom.modalRemovePrescBtn) {
+      dom.modalRemovePrescBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        clearPrescriptionFile();
+      });
+    }
+    if (dom.modalOrderForm) {
+      dom.modalOrderForm.addEventListener('submit', handleModalOrderSubmit);
+    }
+
     // Drawer, Desktop Nav and Internal Anchor Smooth Scrolling
     document.querySelectorAll('.drawer-link, .nav-link, a[href^="#"]').forEach(link => {
       link.addEventListener('click', (e) => {
@@ -1335,6 +1607,14 @@
         if (!href || !href.startsWith('#')) return;
         const targetId = href.slice(1);
         if (!targetId) return;
+
+        // Open dedicated order window if clicking on order / cart buttons
+        if (targetId === 'order-section' || link.classList.contains('cart-icon-btn') || link.classList.contains('drawer-link-highlight')) {
+          e.preventDefault();
+          closeDrawer();
+          openOrderModal();
+          return;
+        }
 
         const cat = link.getAttribute('data-cat');
         if (cat) {
@@ -1378,11 +1658,12 @@
       });
     }
 
-    // Keyboard navigation for Lightbox & Drawer
+    // Keyboard navigation for Lightbox, Order Modal & Drawer
     window.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
         if (state.lightbox.isOpen) closeLightbox();
         closeDrawer();
+        closeOrderModal();
         if (dom.cardReminderModal) dom.cardReminderModal.style.display = 'none';
       }
       if (state.lightbox.isOpen) {
@@ -1404,13 +1685,11 @@
       });
     });
 
-    // Smooth Scroll for Cart Bar
+    // Open Dedicated Order Window for Cart Bar
     if (dom.cartBarBtn) {
-      dom.cartBarBtn.addEventListener('click', () => {
-        const orderSec = document.getElementById('order-section');
-        if (orderSec) {
-          orderSec.scrollIntoView({ behavior: 'smooth' });
-        }
+      dom.cartBarBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        openOrderModal();
       });
     }
 
