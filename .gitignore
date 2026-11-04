@@ -3,9 +3,11 @@ Thumbs.db
 Desktop.ini
 .DS_Store
 
-# Temporary Browser / Test Data
+# Temporary Browser / Test / Automation Data
+temp_*
 temp_edge_*
 .system_generated/
+*.log
 
 # Vercel
 .vercel
@@ -13,5 +15,3 @@ temp_edge_*
 # Node
 node_modules/
 npm-debug.log*
-
-.vercel

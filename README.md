@@ -28,9 +28,6 @@ Built with vanilla HTML5, CSS3, and JavaScript — no frameworks, no build step,
 ├── specs.csv                    # Spreadsheet database containing all product specs & review flags
 ├── products.sample.csv          # Sample spreadsheet template for easy editing in Excel / Sheets
 ├── generate_products.py         # Safe Python regeneration script (preserves existing customized prices)
-├── originals/                   # Unmodified original uploaded images
-│   ├── frames/
-│   └── lenses/
 ├── images/                      # WebP optimized product images (<800px width)
 │   ├── frames/
 │   ├── lenses/
@@ -45,8 +42,7 @@ Built with vanilla HTML5, CSS3, and JavaScript — no frameworks, no build step,
 ├── favicon.ico                  # Multi-resolution ICO favicon
 ├── robots.txt                   # Search engine crawler instructions
 ├── sitemap.xml                  # XML Sitemap for search indexing
-├── _headers                     # Netlify caching and security headers
-├── netlify.toml                 # Netlify deployment configuration
+├── vercel.json                  # Vercel deployment configuration & caching headers
 └── README.md                    # Operational and deployment guide
 ```
 
@@ -142,15 +138,23 @@ Changes in `js/config.js` take effect immediately across all header, hero, conta
 
 ---
 
-## 🌐 How to Deploy to Netlify (Drag and Drop)
+## 🌐 Production Deployment (Vercel & GitHub)
 
-1. Go to [Netlify](https://app.netlify.com/) and sign in.
-2. Under **Sites**, click **"Add new site"** → **"Deploy manually"** (or drag & drop).
-3. Drag the entire project folder `tariqOpticalCentre` onto the browser window.
-4. Netlify will deploy your site in seconds and provide a live URL (e.g. `https://tariq-optical.netlify.app`).
-5. **Connect Custom Domain**:
-   - In site settings, go to **Domain management** → **Add custom domain** (e.g. `tariqoptical.pk`).
-   - Add the DNS records (A record pointing to `75.2.60.5` or CNAME) at your domain registrar. Netlify will provision a free SSL certificate automatically.
+The website is configured with `vercel.json` for automated deployment and edge caching:
+- **Live Production URL**: [https://tariq-optical-centre.vercel.app](https://tariq-optical-centre.vercel.app)
+- **GitHub Repository**: [M-AmirLatif/tariqOpticalCentre](https://github.com/M-AmirLatif/tariqOpticalCentre)
+
+To deploy updates:
+1. Commit and push to GitHub:
+   ```bash
+   git add -A
+   git commit -m "Your update description"
+   git push origin main
+   ```
+2. Or deploy directly via the Vercel CLI:
+   ```bash
+   npx vercel --prod
+   ```
 
 ---
 
