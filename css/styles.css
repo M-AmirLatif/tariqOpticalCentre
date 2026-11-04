@@ -3070,3 +3070,236 @@ html, body {
     width: 100% !important;
   }
 }
+
+
+/* =========================================================================
+   POLISH & REFINEMENTS: Mobile Icons, Badges, Filters & Contrast (Latest)
+   ========================================================================= */
+
+/* 1. Header Action Buttons Centering */
+.header-actions {
+  display: flex !important;
+  align-items: center !important;
+}
+
+.header-actions .btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  line-height: 1 !important;
+  text-align: center !important;
+  box-sizing: border-box !important;
+}
+
+.header-actions .btn-icon,
+.header-actions .cart-icon,
+.header-actions .three-dots-icon,
+.header-actions .theme-icon {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 100% !important;
+  height: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  line-height: 1 !important;
+}
+
+.header-actions svg {
+  display: block !important;
+  margin: auto !important;
+}
+
+/* 2. Hero Badge Single-Line Guard */
+.hero-badge {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0.4rem !important;
+  background: var(--glass-light) !important;
+  color: var(--heading) !important;
+  font-weight: 700 !important;
+  padding: 5px 14px !important;
+  border-radius: var(--radius-pill) !important;
+  width: fit-content !important;
+  max-width: 96vw !important;
+  border: 1px solid rgba(43, 181, 176, 0.3) !important;
+  font-size: clamp(0.72rem, 2.7vw, 0.92rem) !important;
+  white-space: nowrap !important;
+  box-sizing: border-box !important;
+  text-align: center !important;
+}
+
+.hero-badge-sparkle {
+  font-size: 0.95em;
+  display: inline-block;
+}
+
+.hero-badge-text {
+  white-space: nowrap !important;
+}
+
+/* 3. Showcase Badge (.hero-feature-badge) */
+.hero-feature-badge {
+  background: rgba(43, 181, 176, 0.16) !important;
+  color: var(--glass) !important;
+  border: 1px solid rgba(43, 181, 176, 0.35) !important;
+  font-weight: 700 !important;
+  font-size: 0.85rem !important;
+  padding: 4px 12px !important;
+  border-radius: var(--radius-pill) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0.35rem !important;
+}
+
+[data-theme="light"] .hero-feature-badge {
+  background: rgba(14, 59, 67, 0.08) !important;
+  color: var(--ink) !important;
+  border-color: rgba(14, 59, 67, 0.2) !important;
+}
+
+/* 4. Filter Section 2x2 Grid Structure */
+.specs-filter-section {
+  border-top: 1px solid var(--line);
+  padding-top: 0.85rem;
+  margin-top: 0.75rem;
+  width: 100%;
+}
+
+.filter-dropdowns-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.filter-control-wrap {
+  width: 100%;
+  position: relative;
+}
+
+.filter-select {
+  width: 100% !important;
+  height: 42px !important;
+  border: 1.5px solid var(--line) !important;
+  border-radius: var(--radius-pill) !important;
+  font-family: var(--font-body) !important;
+  font-size: 0.88rem !important;
+  font-weight: 600 !important;
+  color: var(--text) !important;
+  background-color: var(--card) !important;
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%232BB5B0' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-position: left 0.75rem center !important;
+  padding: 0 0.85rem 0 1.85rem !important;
+  cursor: pointer !important;
+  box-shadow: var(--shadow-sm);
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+
+.filter-select:focus {
+  border-color: var(--glass) !important;
+  outline: none !important;
+}
+
+.filter-actions-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+  padding-top: 0.65rem;
+  border-top: 1px dashed var(--line);
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .filter-dropdowns-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 0.55rem !important;
+  }
+}
+
+/* 5. Prescription Header on Mobile (Eliminates Empty Space) */
+@media (max-width: 600px) {
+  .prescription-header {
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    gap: 0.6rem !important;
+    margin-bottom: 1rem !important;
+  }
+  .prescription-icon {
+    margin: 0 auto !important;
+    width: 50px !important;
+    height: 50px !important;
+    font-size: 1.85rem !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 !important;
+  }
+  .prescription-title {
+    text-align: center !important;
+    font-size: 1.18rem !important;
+    width: 100% !important;
+    margin-bottom: 0.35rem !important;
+  }
+  .prescription-sub {
+    text-align: center !important;
+    font-size: 0.88rem !important;
+    line-height: 1.55 !important;
+    width: 100% !important;
+  }
+}
+
+/* 6. Textarea Corner Lines Removal */
+textarea.form-control {
+  resize: none !important;
+}
+
+/* 7. Order Submit Button High-Contrast Visibility */
+.btn-order-disabled {
+  background-color: #174236 !important;
+  color: #FFFFFF !important;
+  border: 1.5px dashed rgba(255, 255, 255, 0.3) !important;
+  cursor: not-allowed !important;
+  opacity: 1 !important;
+  font-weight: 700 !important;
+  box-shadow: none !important;
+}
+
+[data-theme="light"] .btn-order-disabled {
+  background-color: #2D6A53 !important;
+  color: #FFFFFF !important;
+  border-color: rgba(255, 255, 255, 0.4) !important;
+}
+
+.btn-order-active {
+  background-color: var(--wa) !important;
+  color: #FFFFFF !important;
+  font-weight: 800 !important;
+  border: none !important;
+  cursor: pointer !important;
+  opacity: 1 !important;
+  box-shadow: 0 4px 18px rgba(31, 168, 85, 0.45) !important;
+}
+
+/* Hide horizontal scrollbars for clean chip carousels */
+.category-tabs-scroll,
+.subcat-chips-row {
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+.category-tabs-scroll::-webkit-scrollbar,
+.subcat-chips-row::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}

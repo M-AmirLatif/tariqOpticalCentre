@@ -833,6 +833,8 @@
     if (orderSubmitBtn) {
       if (canSubmit) {
         orderSubmitBtn.disabled = false;
+        orderSubmitBtn.classList.remove('btn-order-disabled');
+        orderSubmitBtn.classList.add('btn-order-active');
         orderSubmitBtn.style.opacity = '1';
         orderSubmitBtn.style.cursor = 'pointer';
         if (totalCount > 0 && hasCard) {
@@ -844,9 +846,11 @@
         }
       } else {
         orderSubmitBtn.disabled = true;
-        orderSubmitBtn.style.opacity = '0.6';
+        orderSubmitBtn.classList.remove('btn-order-active');
+        orderSubmitBtn.classList.add('btn-order-disabled');
+        orderSubmitBtn.style.opacity = '1';
         orderSubmitBtn.style.cursor = 'not-allowed';
-        orderSubmitBtn.innerHTML = '🛒 پہلے پروڈکٹ منتخب کریں یا کارڈ اپلوڈ کریں';
+        orderSubmitBtn.innerHTML = '<span>🛒</span> <span>پہلے پروڈکٹ منتخب کریں یا کارڈ اپلوڈ کریں</span>';
       }
     }
 
