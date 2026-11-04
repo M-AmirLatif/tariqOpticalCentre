@@ -934,7 +934,7 @@
           </button>
         </div>
         <div class="cart-item-bottom">
-          <div class="qty-stepper" style="height:36px;">
+          <div class="qty-stepper" dir="ltr" style="height:36px;">
             <button type="button" class="stepper-btn" style="width:30px; height:30px; font-size:1.15rem;" data-action="cart-dec" data-id="${item.id}">−</button>
             <span class="stepper-num num" style="min-width:28px; font-size:1rem;">${item.qty}</span>
             <button type="button" class="stepper-btn" style="width:30px; height:30px; font-size:1.15rem;" data-action="cart-inc" data-id="${item.id}">+</button>
@@ -960,8 +960,8 @@
     if (totalBarEl) {
       totalBarEl.innerHTML = `
         <div class="cart-total-row">
-          <span>کل رقم (Total Amount):</span>
-          <span class="num" dir="ltr">Rs ${totalPrice.toLocaleString('en-US')}</span>
+          <span style="font-weight:700;">کل رقم:</span>
+          <span class="num" dir="ltr" style="font-weight:800;">Rs ${totalPrice.toLocaleString('en-US')}</span>
         </div>
         ${hasUnpriced ? `<div style="font-size:0.85rem; color:var(--muted); margin-top:3px;">* بغیر قیمت والے آئٹمز کی قیمت واٹس ایپ پر طے ہوگی۔</div>` : ''}
       `;
@@ -985,10 +985,10 @@
       if (totalCount > 0) {
         dom.stickyCartBar.classList.add('active');
         document.body.classList.add('cart-active');
-        dom.cartBarCount.innerHTML = `آپ کے آرڈر میں: <span class="num">${totalCount}</span> چشمے/آئٹمز`;
+        dom.cartBarCount.innerHTML = `<span class="num">${totalCount}</span> آئٹم منتخب`;
         dom.cartBarTotal.innerHTML = hasUnpriced 
-          ? `کل: Rs <span class="num">${totalPrice.toLocaleString('en-US')}</span>`
-          : `کل رقم: Rs <span class="num">${totalPrice.toLocaleString('en-US')}</span>`;
+          ? `Rs <span class="num">${totalPrice.toLocaleString('en-US')}</span>`
+          : `Rs <span class="num">${totalPrice.toLocaleString('en-US')}</span>`;
       } else {
         dom.stickyCartBar.classList.remove('active');
         document.body.classList.remove('cart-active');
@@ -1002,7 +1002,7 @@
 
     // Update Modal Cart Count Badge
     if (dom.modalCartItemCount) {
-      dom.modalCartItemCount.textContent = `${totalCount} آئٹمز منتخب`;
+      dom.modalCartItemCount.textContent = `${totalCount} آئٹم`;
     }
 
     const hasCard = state.prescriptionImage !== null;
