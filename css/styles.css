@@ -3203,24 +3203,57 @@ html, body {
   white-space: nowrap !important;
 }
 
-/* 3. Showcase Badge (.hero-feature-badge) */
-.hero-feature-badge {
-  background: rgba(43, 181, 176, 0.16) !important;
-  color: var(--glass) !important;
-  border: 1px solid rgba(43, 181, 176, 0.35) !important;
-  font-weight: 700 !important;
-  font-size: 0.85rem !important;
-  padding: 4px 12px !important;
-  border-radius: var(--radius-pill) !important;
-  display: inline-flex !important;
+/* 3. Hero Store Status Pills (100% Equal Height, Padding & Alignment) */
+.store-status-pills {
+  display: flex !important;
   align-items: center !important;
-  gap: 0.35rem !important;
+  justify-content: center !important;
+  gap: 0.65rem !important;
+  flex-wrap: wrap !important;
+  margin: 0.25rem auto 0.5rem !important;
+  width: 100% !important;
 }
 
-[data-theme="light"] .hero-feature-badge {
+.store-status-pills .pill-badge {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0.4rem !important;
+  height: 38px !important;
+  min-height: 38px !important;
+  padding: 0 1.1rem !important;
+  border-radius: var(--radius-pill) !important;
+  font-size: 0.88rem !important;
+  font-weight: 700 !important;
+  line-height: 1 !important;
+  margin: 0 !important;
+  white-space: nowrap !important;
+  box-sizing: border-box !important;
+  vertical-align: middle !important;
+}
+
+.store-status-pills .pill-open {
+  background: rgba(31, 168, 85, 0.16) !important;
+  color: #2ECC71 !important;
+  border: 1.5px solid rgba(46, 204, 113, 0.45) !important;
+}
+
+[data-theme="light"] .store-status-pills .pill-open {
+  background: rgba(26, 138, 70, 0.1) !important;
+  color: #1A8A46 !important;
+  border: 1.5px solid rgba(26, 138, 70, 0.35) !important;
+}
+
+.store-status-pills .pill-test {
+  background: rgba(43, 181, 176, 0.16) !important;
+  color: var(--glass) !important;
+  border: 1.5px solid rgba(43, 181, 176, 0.45) !important;
+}
+
+[data-theme="light"] .store-status-pills .pill-test {
   background: rgba(14, 59, 67, 0.08) !important;
-  color: var(--ink) !important;
-  border-color: rgba(14, 59, 67, 0.2) !important;
+  color: var(--heading) !important;
+  border: 1.5px solid rgba(14, 59, 67, 0.25) !important;
 }
 
 /* 4. Filter Section 2x2 Grid Structure */

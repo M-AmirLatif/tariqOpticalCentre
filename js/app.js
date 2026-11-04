@@ -154,18 +154,22 @@
     return window.matchMedia('(prefers-color-scheme: dark)').matches;
   }
 
+  const THEME_SUN_SVG = `<svg class="sun-icon-svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFC107" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5" fill="#FFD54F" stroke="#FFA000" stroke-width="1.2"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>`;
+
+  const THEME_MOON_SVG = `<svg class="moon-icon-svg" width="19" height="19" viewBox="0 0 24 24" fill="#0E3B43" stroke="#0E3B43" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>`;
+
   function updateThemeUI(theme) {
     const isDark = theme === 'dark' || (!theme && getSystemPrefersDark());
     document.querySelectorAll('.theme-toggle-btn').forEach(btn => {
-      const icon = btn.querySelector('.theme-icon') || btn.querySelector('span');
+      const icon = btn.querySelector('.theme-icon');
       if (icon) {
-        icon.textContent = isDark ? '☀️' : '🌙';
+        icon.innerHTML = isDark ? THEME_SUN_SVG : THEME_MOON_SVG;
       }
       btn.setAttribute('aria-label', isDark ? 'لائٹ موڈ آن کریں (White Mode)' : 'ڈارک موڈ آن کریں (Dark Mode)');
       btn.setAttribute('title', isDark ? 'لائٹ موڈ آن کریں (White Mode)' : 'ڈارک موڈ آن کریں (Dark Mode)');
       const label = btn.querySelector('.drawer-theme-text');
       if (label) {
-        label.textContent = isDark ? '☀️ وائٹ موڈ لگائیں' : '🌙 ڈارک موڈ لگائیں';
+        label.textContent = isDark ? 'وائٹ موڈ لگائیں' : 'ڈارک موڈ لگائیں';
       }
     });
   }
