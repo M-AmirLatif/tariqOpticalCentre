@@ -2042,49 +2042,42 @@ textarea.form-control {
 /* Floating WhatsApp Quick Button */
 .floating-wa-btn {
   position: fixed;
-  bottom: 24px;
-  bottom: calc(24px + env(safe-area-inset-bottom));
-  left: 20px; /* Left side in RTL */
-  z-index: 85;
-  width: 60px;
-  height: 60px;
+  bottom: 20px;
+  bottom: calc(20px + env(safe-area-inset-bottom));
+  left: 18px; /* Left side in RTL */
+  z-index: 100;
+  width: 58px;
+  height: 58px;
   border-radius: 50%;
   background: var(--wa);
   color: #FFFFFF;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 6px 20px rgba(31, 168, 85, 0.4);
+  box-shadow: 0 6px 20px rgba(31, 168, 85, 0.45);
   cursor: pointer;
   border: 2px solid #FFFFFF;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease, visibility 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, bottom 0.25s ease;
   text-decoration: none;
 }
 
 .floating-wa-btn:hover {
   transform: scale(1.08);
-  box-shadow: 0 8px 24px rgba(31, 168, 85, 0.5);
+  box-shadow: 0 8px 24px rgba(31, 168, 85, 0.55);
 }
 
 .floating-wa-btn svg {
-  width: 34px;
-  height: 34px;
+  width: 32px;
+  height: 32px;
   fill: #FFFFFF;
 }
 
-/* Adjust floating WA position when bottom cart bar is active */
+/* Adjust floating WA position smoothly above the bottom cart bar when cart is active */
 body.cart-active .floating-wa-btn {
-  bottom: calc(85px + env(safe-area-inset-bottom));
+  bottom: calc(76px + env(safe-area-inset-bottom));
 }
 
-/* On mobile, hide floating WA circle when cart bar is active so it never blocks filter chips or content */
-@media (max-width: 768px) {
-  body.cart-active .floating-wa-btn {
-    display: none !important;
-  }
-}
-
-/* Hide floating WA when modal is open to avoid visual clashes */
+/* Hide floating WA only when modal is open to avoid visual clashes */
 body.order-modal-open .floating-wa-btn {
   opacity: 0;
   visibility: hidden;
