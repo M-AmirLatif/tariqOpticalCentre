@@ -255,7 +255,7 @@
   // Fetch products.json
   async function fetchProducts() {
     try {
-      const res = await fetch('products.json?v=20261111_2212');
+      const res = await fetch('products.json?v=20261111_2216');
       if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
       const data = await res.json();
       state.allProducts = Array.isArray(data) ? data : [];
