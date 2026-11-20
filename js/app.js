@@ -394,12 +394,13 @@
       const q = state.filters.search.trim().toLowerCase();
       list = list.filter(p => {
         const name = (p.name || '').toLowerCase();
+        const nameEn = (p.nameEn || '').toLowerCase();
         const code = (p.code || '').toLowerCase();
         const brand = (p.specs?.brand || '').toLowerCase();
         const color = (p.specs?.color || '').toLowerCase();
         const material = (p.specs?.material || p.specs?.frameMaterial || '').toLowerCase();
         const shape = (p.specs?.shape || '').toLowerCase();
-        return name.includes(q) || code.includes(q) || brand.includes(q) ||
+        return name.includes(q) || nameEn.includes(q) || code.includes(q) || brand.includes(q) ||
                color.includes(q) || material.includes(q) || shape.includes(q);
       });
     }
@@ -546,7 +547,10 @@
         <div class="zoom-badge">🔍 زوم کریں</div>
       </div>
 
-      <h3 class="product-name" tabindex="0" role="button">${escapeHtml(product.name)}</h3>
+      <h3 class="product-name" tabindex="0" role="button">
+        <span class="product-title-urdu">${escapeHtml(product.name)}</span>
+        ${product.nameEn ? `<span class="product-title-en" dir="ltr">${escapeHtml(product.nameEn)}</span>` : ''}
+      </h3>
       
       <div class="product-badge-row">
         <span class="product-code-tag"><bdi>کوڈ:</bdi> <bdi class="num" dir="ltr">${escapeHtml(product.code || product.specs?.code || 'N/A')}</bdi></span>
@@ -1408,7 +1412,10 @@
           />
         </div>
         <div class="lightbox-details-box">
-          <h2 style="font-size:1.6rem; margin-bottom:0.4rem; color:var(--heading);">${escapeHtml(product.name)}</h2>
+          <h2 style="font-size:1.6rem; margin-bottom:0.4rem; color:var(--heading);">
+            <span>${escapeHtml(product.name)}</span>
+            ${product.nameEn ? `<span style="display:block; font-size:1.02rem; font-weight:600; color:var(--brass-dark); margin-top:0.25rem;" dir="ltr">${escapeHtml(product.nameEn)}</span>` : ''}
+          </h2>
           <div style="margin-bottom:0.75rem;">
             <span class="product-code-tag"><bdi>کوڈ:</bdi> <bdi class="num" dir="ltr">${escapeHtml(product.code || product.specs?.code || 'N/A')}</bdi></span>
           </div>

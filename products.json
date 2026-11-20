@@ -2515,7 +2515,7 @@
     "cat": "contact",
     "code": "CL-201",
     "type": "کلر کانٹیکٹ لینز",
-    "name": "ایڈور کلر کانٹیکٹ لینز (Adore Color Contact Lenses)",
+    "name": "ایڈور کلر کانٹیکٹ لینز",
     "price": 2850,
     "gender": "سب کے لیے",
     "img": "images/contactpowerlenses/1st.webp",
@@ -2537,14 +2537,15 @@
       "powerRange": "-0.50 To -15.00 Sph",
       "schedule": "سالانہ (Yearly Lenses)",
       "note": "ایڈور کلر کانٹیکٹ لینز - واٹر کنٹینٹ 55%، میٹریل Phlyema، قطر 14.50mm، بیس کرو 8.6mm، طریقہ کار Lathe Cut، پاور رینج -0.50 تا -15.00"
-    }
+    },
+    "nameEn": "Adore Color Contact Lenses"
   },
   {
     "id": 95,
     "cat": "contact",
     "code": "CL-202",
     "type": "ٹو ٹون لینز",
-    "name": "کمفرٹ جیول سیریز ٹو ٹون لینز (Comfort Jewel Series)",
+    "name": "کمفرٹ جیول سیریز ٹو ٹون",
     "price": 1850,
     "gender": "سب کے لیے",
     "img": "images/contactpowerlenses/2nd.webp",
@@ -2566,14 +2567,15 @@
       "powerRange": "Up to -10.00 Sph",
       "schedule": "سالانہ (Yearly Lenses)",
       "note": "کمفرٹ جیول سیریز - ٹو ٹون لینز، بیس کرو 8.60mm، قطر 14.5mm، واٹر کنٹینٹ 42%، پاور -10.00 Sph تک"
-    }
+    },
+    "nameEn": "Comfort Jewel Series (Two-Tone)"
   },
   {
     "id": 96,
     "cat": "contact",
     "code": "CL-203",
     "type": "ہائیڈروجل لینز",
-    "name": "بیلا گلو ہائیڈروجل کلیکشن (Bella Glow Collection)",
+    "name": "بیلا گلو ہائیڈروجل کلیکشن",
     "price": 2650,
     "gender": "سب کے لیے",
     "img": "images/contactpowerlenses/3rd.webp",
@@ -2595,14 +2597,15 @@
       "powerRange": "-0.50 To -8.00 Sph",
       "schedule": "سالانہ (Yearly)",
       "note": "بیلا گلو کلیکشن - ہائیڈروجل میٹریل، بیس کرو 8.60mm، قطر 14.5mm، واٹر کنٹینٹ 55%، پاور -0.50 تا -8.00"
-    }
+    },
+    "nameEn": "Bella Glow Collection (Hydrogel)"
   },
   {
     "id": 97,
     "cat": "contact",
     "code": "CL-204",
-    "type": "نیچرل کلیکشن لینز",
-    "name": "بیلا نیچرل کلیکشن 10 شیڈز (Bella Natural Collection)",
+    "type": "نیچرل کلیکشن",
+    "name": "بیلا نیچرل کلیکشن 10 شیڈز",
     "price": 2650,
     "gender": "سب کے لیے",
     "img": "images/contactpowerlenses/4th.webp",
@@ -2624,14 +2627,15 @@
       "powerRange": "-0.50 To -8.00 Sph",
       "schedule": "سالانہ (Yearly)",
       "note": "بیلا نیچرل کلیکشن - 10 دلکش کلرز، بیس کرو 8.60mm، قطر 14.2 تا 14.50mm، واٹر کنٹینٹ 55%، پاور -0.50 تا -8.00"
-    }
+    },
+    "nameEn": "Bella Natural Collection (10 Shades)"
   },
   {
     "id": 98,
     "cat": "contact",
     "code": "CL-205",
     "type": "تھری ٹون لینز",
-    "name": "کمفرٹ رینبو یونیک تھری ٹون (Comfort Rainbow Three Tone)",
+    "name": "کمفرٹ رینبو تھری ٹون لینز",
     "price": 1950,
     "gender": "سب کے لیے",
     "img": "images/contactpowerlenses/5th.webp",
@@ -2653,14 +2657,15 @@
       "powerRange": "Up to -15.00 Sph",
       "schedule": "سالانہ (Yearly Lenses)",
       "note": "کمفرٹ رینبو سیریز - یونیک تھری ٹون ڈیزائن، بیس کرو 8.60mm، قطر 14.5mm، واٹر کنٹینٹ 55%، پاور -15.00 Sph تک"
-    }
+    },
+    "nameEn": "Comfort Rainbow (Three-Tone)"
   },
   {
     "id": 99,
     "cat": "contact",
     "code": "CL-206",
     "type": "ون ٹون لینز",
-    "name": "کمفرٹ بیسک ون ٹون نیچرل لینز (Comfort One-Tone Natural)",
+    "name": "کمفرٹ بیسک ون ٹون نیچرل",
     "price": 1650,
     "gender": "سب کے لیے",
     "img": "images/contactpowerlenses/6th.webp",
@@ -2682,14 +2687,15 @@
       "powerRange": "Power Lenses Up to -10.00 Sph",
       "schedule": "سالانہ (Yearly Lenses)",
       "note": "کمفرٹ بیسک سیریز - ون ٹون نیچرل کلر، بیس کرو 8.60mm، قطر 14.50mm، واٹر کنٹینٹ 42%، پاور -10.00 Sph تک"
-    }
+    },
+    "nameEn": "Comfort Basic (One-Tone Natural)"
   },
   {
     "id": 100,
     "cat": "contact",
     "code": "CL-207",
-    "type": "ایلیٹ کلیکشن لینز",
-    "name": "بیلا ایلیٹ لگژری کلیکشن (Bella Elite Collection)",
+    "type": "ایلیٹ کلیکشن",
+    "name": "بیلا ایلیٹ لگژری کلیکشن",
     "price": 2850,
     "gender": "سب کے لیے",
     "img": "images/contactpowerlenses/7th.webp",
@@ -2711,14 +2717,15 @@
       "powerRange": "-0.50 To -8.00 Sph",
       "schedule": "سالانہ (Yearly)",
       "note": "بیلا ایلیٹ کلیکشن - 16 شاہکار کلرز، بیس کرو 8.60mm، قطر 14.5mm، واٹر کنٹینٹ 55%، پاور رینج -0.50 تا -8.00"
-    }
+    },
+    "nameEn": "Bella Elite Collection (16 Shades)"
   },
   {
     "id": 101,
     "cat": "contact",
     "code": "CL-208",
     "type": "ٹورک لینز (Toric)",
-    "name": "نیو کمفرٹ کلر ٹورک سلنڈریکل لینز (New Comfort Color Toric)",
+    "name": "نیو کمفرٹ کلر ٹورک (سلنڈر نمبر)",
     "price": 3450,
     "gender": "سب کے لیے",
     "img": "images/contactpowerlenses/8th.webp",
@@ -2742,14 +2749,15 @@
       "axis": "10 To 180 (10 Steps)",
       "schedule": "Extended Wear (ایکسٹینڈڈ ویئر)",
       "note": "نیو کمفرٹ کلر ٹورک - ایسٹیگمیٹزم سلنڈر نمبر کے لیے، سفیریکل -0.50 تا -10.00، سلنڈر -0.50 تا -4.00، ایکسس 10 تا 180، واٹر کنٹینٹ 60%، میڈ ان کوریا"
-    }
+    },
+    "nameEn": "New Comfort Color Toric (Astigmatism)"
   },
   {
     "id": 102,
     "cat": "contact",
     "code": "CL-209",
-    "type": "ون ڈے کلر لینز",
-    "name": "بیلا ون ڈے کلر لینز (Bella One Day Color)",
+    "type": "ون ڈے لینز",
+    "name": "بیلا ون ڈے کلر لینز",
     "price": 1950,
     "gender": "سب کے لیے",
     "img": "images/contactpowerlenses/9th.webp",
@@ -2771,14 +2779,15 @@
       "powerRange": "-0.50 To -6.00 Sph",
       "schedule": "ایک روزہ (Daily Disposable)",
       "note": "بیلا ون ڈے کلر - روزانہ کا تازہ احساس، بیس کرو 8.60mm، قطر 14.5mm، پاور رینج -0.50 تا -6.00"
-    }
+    },
+    "nameEn": "Bella One Day Color (Daily)"
   },
   {
     "id": 103,
     "cat": "contact",
     "code": "CL-210",
-    "type": "ڈائمنڈ کلیکشن لینز",
-    "name": "بیلا ڈائمنڈ کلیکشن ہائیڈروجل لینز (Bella Diamond Collection)",
+    "type": "ڈائمنڈ کلیکشن",
+    "name": "بیلا ڈائمنڈ ہائیڈروجل کلیکشن",
     "price": 2750,
     "gender": "سب کے لیے",
     "img": "images/contactpowerlenses/10th.webp",
@@ -2800,14 +2809,15 @@
       "powerRange": "-0.50 To -8.00 Sph",
       "schedule": "سالانہ (Yearly)",
       "note": "بیلا ڈائمنڈ کلیکشن - ہائیڈروجل میٹریل، بیس کرو 8.60mm، قطر 14.5mm، واٹر کنٹینٹ 55%، پاور -0.50 تا -8.00"
-    }
+    },
+    "nameEn": "Bella Diamond Collection (Hydrogel)"
   },
   {
     "id": 104,
     "cat": "contact",
     "code": "CL-211",
-    "type": "سلیکون ہائیڈروجل لینز",
-    "name": "کمفرٹ لگژری سلیکون ہائیڈروجل لینز (Comfort Luxe Hidrocor)",
+    "type": "سلیکون ہائیڈروجل",
+    "name": "کمفرٹ لگژری سلیکون ہائیڈروجل",
     "price": 2450,
     "gender": "سب کے لیے",
     "img": "images/contactpowerlenses/11th.webp",
@@ -2829,6 +2839,7 @@
       "powerRange": "Up to -8.00 Sph",
       "schedule": "سالانہ (Yearly)",
       "note": "کمفرٹ لگژری ہائیڈروکور - سلیکون ہائیڈروجل زیادہ آکسیجن اور آرام، بیس کرو 8.60mm، قطر 14.5mm، واٹر کنٹینٹ 55%، پاور -8.00 Sph تک"
-    }
+    },
+    "nameEn": "Comfort Luxe Hidrocor (Silicone)"
   }
 ]
