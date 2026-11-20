@@ -377,10 +377,15 @@
         const kind = p.specs?.kind || '';
         const coating = p.specs?.coating || '';
         const type = p.type || '';
+        const subcat = p.specs?.subcat || p.subcat || '';
+        const brand = p.specs?.brand || '';
+        const targetSubcat = state.filters.subcat.toLowerCase();
         return shape.includes(state.filters.subcat) ||
                kind.includes(state.filters.subcat) ||
                coating.includes(state.filters.subcat) ||
-               type.includes(state.filters.subcat);
+               type.includes(state.filters.subcat) ||
+               subcat.toLowerCase().includes(targetSubcat) ||
+               brand.toLowerCase().includes(targetSubcat);
       });
     }
 

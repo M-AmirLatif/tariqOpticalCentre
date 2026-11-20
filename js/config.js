@@ -48,6 +48,7 @@ const SHOP_CONFIG = {
     { id: "frame", name: "فریم", icon: "👓" },
     { id: "sun", name: "دھوپ کے چشمے", icon: "🕶️" },
     { id: "lens", name: "لینز", icon: "🔍" },
+    { id: "contact", name: "کانٹیکٹ لینز", icon: "👁️" },
     { id: "mirror", name: "آئینے", icon: "🪞" },
     { id: "accessory", name: "لوازمات", icon: "🧰" }
   ],
@@ -76,6 +77,16 @@ const SHOP_CONFIG = {
       { id: "بلیو کٹ + فوٹو کرومک", name: "بلیو کٹ + دھوپ چھاؤں" },
       { id: "فوٹو کرومک (دھوپ چھاؤں)", name: "فوٹو کرومک (Photochromic)" },
       { id: "بلیو کٹ (Hard Multi Coating)", name: "اینٹی بلیو لائٹ" }
+    ],
+    contact: [
+      { id: "all", name: "سب کانٹیکٹ لینز" },
+      { id: "Bella", name: "بیلا (Bella)" },
+      { id: "Comfort", name: "کمفرٹ (Comfort)" },
+      { id: "Comfort. Toric", name: "کمفرٹ ٹورک (Toric)" },
+      { id: "Comfort By Pretty", name: "کمفرٹ بائے پریٹی (Pretty)" },
+      { id: "New Bio Transparent", name: "نیو بائیو ٹرانسپیرنٹ (Bio)" },
+      { id: "Adore", name: "ایڈور (Adore)" },
+      { id: "Vision 6", name: "ویژن 6 (Vision 6)" }
     ],
     mirror: [
       { id: "all", name: "سب آئینے" },
@@ -134,6 +145,23 @@ const SHOP_CONFIG = {
       { key: "gender", label: "کس کے لیے" },
       { key: "condition", label: "حالت" },
       { key: "note", label: "اضافی معلومات" }
+    ],
+    contact: [
+      { key: "code", label: "ماڈل کوڈ" },
+      { key: "brand", label: "برانڈ" },
+      { key: "subcat", label: "کلیکشن / برانڈ" },
+      { key: "powerRange", label: "پاور رینج" },
+      { key: "waterContent", label: "پانی کا تناسب (W.C)" },
+      { key: "baseCurve", label: "بیس کرو (B.C)" },
+      { key: "dia", label: "قطر (Dia)" },
+      { key: "cylinderPower", label: "سلنڈر پاور (Cyl)" },
+      { key: "axis", label: "ایکسس (Axis)" },
+      { key: "material", label: "میٹریل" },
+      { key: "schedule", label: "استعمال کی مدت" },
+      { key: "color", label: "رنگ / شیڈز" },
+      { key: "condition", label: "حالت" },
+      { key: "stock", label: "دستیابی" },
+      { key: "note", label: "اضافی تفصیلات" }
     ],
     mirror: [
       { key: "code", label: "ماڈل کوڈ" },
