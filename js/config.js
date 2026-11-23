@@ -65,10 +65,10 @@ const SHOP_CONFIG = {
     ],
     sun: [
       { id: "all", name: "سب سن گلاسز" },
-      { id: "پائلٹ", name: "پائلٹ / ایوی ایٹر" },
-      { id: "ویفیرر", name: "ویفیرر (Wayfarer)" },
-      { id: "اسپورٹس", name: "اسپورٹس" },
-      { id: "پولرائزڈ", name: "پولرائزڈ لینز" }
+      { id: "پروٹیکٹو", name: "پروٹیکٹو (100% UV)" },
+      { id: "اسٹائلش", name: "اسٹائلش لک (Stylish)" },
+      { id: "برانڈڈ", name: "برانڈڈ (Gucci, Hermes, YSL)" },
+      { id: "ویفیرر", name: "ویفیرر (Wayfarer)" }
     ],
     lens: [
       { id: "all", name: "سب لینز" },
