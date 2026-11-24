@@ -47,11 +47,6 @@
           <span>لائیو ویب سائٹ</span>
         </a>
 
-        <button id="btnSettings" class="btn btn-secondary btn-sm" title="ڈیٹا بیس ترتیبات">
-          <span>⚙️</span>
-          <span>سیٹنگز</span>
-        </button>
-
         <button id="btnLogout" class="btn btn-danger btn-sm" style="display: none;">
           <span>🚪</span>
           <span>لاگ آؤٹ</span>
@@ -434,40 +429,11 @@
     </div>
   </div>
 
-  <!-- 4. Settings Modal -->
-  <div id="settingsModal" class="modal-backdrop">
-    <div class="modal-content" style="max-width: 480px;">
-      <div class="modal-header">
-        <h3>⚙️ ڈیٹا بیس ترتیبات (Supabase Settings)</h3>
-        <button type="button" class="btn btn-secondary btn-sm close-modal-btn">&times;</button>
-      </div>
-      <form id="settingsForm">
-        <div class="modal-body">
-          <div class="form-group">
-            <label for="settingsUrl">Supabase Project URL</label>
-            <input type="url" id="settingsUrl" class="form-control ltr-text" required />
-          </div>
-          <div class="form-group">
-            <label for="settingsKey">Supabase Anon Key</label>
-            <input type="password" id="settingsKey" class="form-control ltr-text" required />
-          </div>
-          <p style="font-size: 0.775rem; color: var(--text-muted);">
-            یہ معلومات آپ کے براؤزر کے لوکل اسٹوریج میں محفوظ ہوتی ہیں اور براہ راست ڈیٹا بیس سے رابطہ قائم کرتی ہیں۔
-          </p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary close-modal-btn">بند کریں</button>
-          <button type="submit" class="btn btn-primary">سیو کریں اور دوبارہ جوڑیں</button>
-        </div>
-      </form>
-    </div>
-  </div>
-
   <!-- Toast Container -->
   <div id="toastContainer" class="toast-container"></div>
 
   <!-- Scripts -->
-  <script src="js/config.js?v=20261124_1405"></script>
-  <script src="js/admin.js?v=20261124_1405"></script>
+  <script src="js/config.js?v=20261124_1415"></script>
+  <script src="js/admin.js?v=20261124_1415"></script>
 </body>
 </html>

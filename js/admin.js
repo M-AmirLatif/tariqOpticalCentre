@@ -27,7 +27,6 @@
   const userBadge = document.getElementById('userBadge');
   const userEmailText = document.getElementById('userEmailText');
   const btnLogout = document.getElementById('btnLogout');
-  const btnSettings = document.getElementById('btnSettings');
 
   const loginForm = document.getElementById('loginForm');
   const loginEmail = document.getElementById('loginEmail');
@@ -94,12 +93,6 @@
   const syncProgressContainer = document.getElementById('syncProgressContainer');
   const syncProgressText = document.getElementById('syncProgressText');
   const syncProgressBar = document.getElementById('syncProgressBar');
-
-  // Settings Modal
-  const settingsModal = document.getElementById('settingsModal');
-  const settingsForm = document.getElementById('settingsForm');
-  const settingsUrl = document.getElementById('settingsUrl');
-  const settingsKey = document.getElementById('settingsKey');
 
   const toastContainer = document.getElementById('toastContainer');
 
@@ -854,26 +847,6 @@
       showToast('سنک کرنے میں خرابی: ' + err.message, 'error');
     } finally {
       btnStartSync.disabled = false;
-    }
-  });
-
-  // ==================== SETTINGS MODAL ====================
-
-  btnSettings.addEventListener('click', () => {
-    settingsUrl.value = localStorage.getItem('toc_supabase_url') || (window.SHOP_CONFIG && SHOP_CONFIG.supabase && SHOP_CONFIG.supabase.url) || '';
-    settingsKey.value = localStorage.getItem('toc_supabase_key') || (window.SHOP_CONFIG && SHOP_CONFIG.supabase && SHOP_CONFIG.supabase.anonKey) || '';
-    openModal(settingsModal);
-  });
-
-  settingsForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const url = settingsUrl.value.trim();
-    const key = settingsKey.value.trim();
-
-    if (url && key) {
-      initializeSupabase(url, key);
-      closeModal(settingsModal);
-      showToast('ترتیبات کامیابی سے محفوظ ہو گئیں۔', 'success');
     }
   });
 
