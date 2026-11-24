@@ -21,6 +21,13 @@ const SHOP_CONFIG = {
   // واٹس ایپ نمبر آرڈرز کے لیے (WhatsApp Number for orders - no +)
   whatsappNumber: "923084454785",
   
+  // سپابیس ڈیٹا بیس ترتیبات (Supabase Configuration)
+  // ایڈمن پینل اور لائیو کیٹلاگ کے لیے اپنی سپابیس کی معلومات درج کریں
+  supabase: {
+    url: "",      // e.g. "https://abcdefghijklmnopqrst.supabase.co"
+    anonKey: ""   // e.g. "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+  },
+  
   // پتہ اور لوکیشن (Address & Location)
   addressUrdu: "نیاز بازار، قصور، پنجاب، پاکستان",
   addressEnglish: "Niaz Bazar, Kasur, Punjab, Pakistan",

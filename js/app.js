@@ -252,10 +252,85 @@
     });
   }
 
-  // Fetch products.json
-  async function fetchProducts() {
+  // Initialize Supabase client if configured
+  let publicSupabase = null;
+  function getPublicSupabase() {
+    if (publicSupabase) return publicSupabase;
+    const url = (window.SHOP_CONFIG && SHOP_CONFIG.supabase && SHOP_CONFIG.supabase.url) || localStorage.getItem('toc_supabase_url');
+    const key = (window.SHOP_CONFIG && SHOP_CONFIG.supabase && SHOP_CONFIG.supabase.anonKey) || localStorage.getItem('toc_supabase_key');
+    if (url && key && url.startsWith('http') && window.supabase) {
+      try {
+        publicSupabase = window.supabase.createClient(url, key);
+        return publicSupabase;
+      } catch (e) {
+        console.warn('Could not init public supabase:', e);
+      }
+    }
+    return null;
+  }
+
+  function normalizeProductFromSupabase(p) {
+    return {
+      id: p.id,
+      cat: p.cat,
+      code: p.code,
+      type: p.type || '',
+      name: p.name,
+      nameEn: p.name_en || p.nameEn || '',
+      price: typeof p.price === 'string' ? parseFloat(p.price) : p.price,
+      gender: p.gender || 'سب کے لیے',
+      img: p.img,
+      stock: p.stock || (p.in_stock ? 'موجود ہے' : 'ختم ہے'),
+      inStock: p.in_stock !== false,
+      featured: !!p.featured,
+      specs: p.specs || {}
+    };
+  }
+
+  let realtimeSubscribed = false;
+  function initRealtimeSubscription(sb) {
+    if (realtimeSubscribed || !sb) return;
     try {
-      const res = await fetch('products.json?v=20261111_2216');
+      sb.channel('realtime-products')
+        .on('postgres_changes', { event: '*', schema: 'public', table: 'products' }, async () => {
+          console.log('Realtime change detected in products table, refreshing catalog...');
+          const { data } = await sb.from('products').select('*').eq('in_stock', true).order('id', { ascending: true });
+          if (Array.isArray(data)) {
+            state.allProducts = data.map(normalizeProductFromSupabase);
+            applyFilters();
+          }
+        })
+        .subscribe();
+      realtimeSubscribed = true;
+    } catch (e) {
+      console.warn('Realtime subscription error:', e);
+    }
+  }
+
+  // Fetch products (Supabase Cloud with fallback to products.json)
+  async function fetchProducts() {
+    const sb = getPublicSupabase();
+    if (sb) {
+      try {
+        const { data, error } = await sb
+          .from('products')
+          .select('*')
+          .eq('in_stock', true)
+          .order('id', { ascending: true });
+
+        if (!error && Array.isArray(data) && data.length > 0) {
+          state.allProducts = data.map(normalizeProductFromSupabase);
+          initRealtimeSubscription(sb);
+          return;
+        }
+      } catch (err) {
+        console.warn('Supabase fetch failed, falling back to products.json:', err);
+      }
+    }
+
+    // Fallback to static products.json
+    try {
+      const res = await fetch('products.json?v=20261124_1210');
       if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
       const data = await res.json();
       state.allProducts = Array.isArray(data) ? data : [];
