@@ -24,8 +24,8 @@ const SHOP_CONFIG = {
   // سپابیس ڈیٹا بیس ترتیبات (Supabase Configuration)
   // ایڈمن پینل اور لائیو کیٹلاگ کے لیے اپنی سپابیس کی معلومات درج کریں
   supabase: {
-    url: "",      // e.g. "https://abcdefghijklmnopqrst.supabase.co"
-    anonKey: ""   // e.g. "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+    url: "https://iwtpzgkxdrjgoalpvcyu.supabase.co",
+    anonKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml3dHB6Z2t4ZHJqZ29hbHB2Y3l1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTU1MDU0NTcsImV4cCI6MjExMTA4MTQ1N30.B7KwtbDuY97oOR-Qt-pPRJ9wFKie4i9y-54bX7A0XvE"
   },
   
   // پتہ اور لوکیشن (Address & Location)
