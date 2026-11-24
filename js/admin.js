@@ -58,7 +58,6 @@
   const emptyState = document.getElementById('emptyState');
   const btnRefresh = document.getElementById('btnRefresh');
   const btnOpenAddModal = document.getElementById('btnOpenAddModal');
-  const btnSyncCatalog = document.getElementById('btnSyncCatalog');
 
   // Product Modal
   const productModal = document.getElementById('productModal');
@@ -67,6 +66,7 @@
   const prodFormId = document.getElementById('prodFormId');
   const prodCat = document.getElementById('prodCat');
   const prodType = document.getElementById('prodType');
+  const prodTypeCustom = document.getElementById('prodTypeCustom');
   const prodCode = document.getElementById('prodCode');
   const prodPrice = document.getElementById('prodPrice');
   const prodGender = document.getElementById('prodGender');
@@ -86,13 +86,6 @@
   const deleteModal = document.getElementById('deleteModal');
   const deleteProdName = document.getElementById('deleteProdName');
   const btnConfirmDelete = document.getElementById('btnConfirmDelete');
-
-  // Sync Modal
-  const syncModal = document.getElementById('syncModal');
-  const btnStartSync = document.getElementById('btnStartSync');
-  const syncProgressContainer = document.getElementById('syncProgressContainer');
-  const syncProgressText = document.getElementById('syncProgressText');
-  const syncProgressBar = document.getElementById('syncProgressBar');
 
   const toastContainer = document.getElementById('toastContainer');
 
@@ -271,11 +264,6 @@
         } catch (e) {
           console.warn('Auto-healing zero prices warning:', e);
         }
-      }
-
-      // If Supabase table is completely empty, offer quick sync from products.json
-      if (allProducts.length === 0) {
-        openModal(syncModal);
       }
 
       updateMetrics();
@@ -549,46 +537,136 @@
 
   // ==================== DYNAMIC SPECS & FORM ====================
 
+  const SUBCATEGORIES_MAP = {
+    frame: [
+      { id: "چوکور", name: "چوکور (Rectangle / Square)" },
+      { id: "گول", name: "گول (Round)" },
+      { id: "کیٹ آئی", name: "کیٹ آئی (Cat-Eye)" },
+      { id: "بغیر فریم", name: "بغیر فریم (Rimless)" },
+      { id: "بچوں کے", name: "بچوں کے فریم (Kids)" }
+    ],
+    sun: [
+      { id: "پروٹیکٹو", name: "پروٹیکٹو (100% UV Protective)" },
+      { id: "اسٹائلش", name: "اسٹائلش لک (Stylish Look)" },
+      { id: "برانڈڈ", name: "برانڈڈ (Gucci, Hermes, YSL)" },
+      { id: "ویفیرر", name: "ویفیرر (Wayfarer)" }
+    ],
+    contact: [
+      { id: "Bella", name: "بیلا (Bella)" },
+      { id: "Comfort", name: "کمفرٹ (Comfort)" },
+      { id: "Comfort. Toric", name: "کمفرٹ ٹورک (Toric)" },
+      { id: "Comfort By Pretty", name: "کمفرٹ بائے پریٹی (Pretty)" },
+      { id: "New Bio Transparent", name: "نیو بائیو ٹرانسپیرنٹ (Bio)" },
+      { id: "Adore", name: "ایڈور (Adore)" },
+      { id: "Vision 6", name: "ویژن 6 (Vision 6)" }
+    ],
+    lens: [
+      { id: "سادہ", name: "سادہ / سنگل وژن (Single Vision)" },
+      { id: "ہارڈ کوٹنگ (اینٹی اسکریچ)", name: "ہارڈ کوٹنگ (Anti-Scratch)" },
+      { id: "بلیو کٹ + فوٹو کرومک", name: "بلیو کٹ + دھوپ چھاؤں (Blue Cut + Photo)" },
+      { id: "فوٹو کرومک (دھوپ چھاؤں)", name: "فوٹو کرومک (Photochromic)" },
+      { id: "بلیو کٹ (Hard Multi Coating)", name: "اینٹی بلیو لائٹ (Blue Cut HMC)" }
+    ]
+  };
+
+  const DYNAMIC_SPECS_FIELDS = {
+    frame: [
+      { key: "brand", label: "برانڈ / کمپنی (Brand)", placeholder: "مثال: Porsche, Gucci, Ray-Ban" },
+      { key: "material", label: "میٹریل (Material)", placeholder: "مثال: پلاسٹک (TR90), میٹل, ایسیٹیٹ" },
+      { key: "shape", label: "فریم کی شکل (Shape)", placeholder: "مثال: چوکور, گول, کیٹ آئی" },
+      { key: "size", label: "سائز (Size)", placeholder: "مثال: 52-18-140" },
+      { key: "color", label: "رنگ (Color)", placeholder: "مثال: کالا, براؤن, نیلا" },
+      { key: "flexible", label: "لچکدار (Flexible)", placeholder: "ہاں / نہیں" },
+      { key: "note", label: "اضافی تفصیلات (Note)", placeholder: "خوبصورت اور مضبوط ڈیزائن" }
+    ],
+    sun: [
+      { key: "brand", label: "برانڈ (Brand)", placeholder: "مثال: Hermes, Gucci, Saint Laurent" },
+      { key: "uv", label: "UV تحفظ (UV Protection)", placeholder: "100% UV Protection / UV400" },
+      { key: "polarized", label: "پولرائزڈ (Polarized)", placeholder: "ہاں / نہیں" },
+      { key: "lensColor", label: "شیشے کا رنگ (Lens Color)", placeholder: "مثال: کالا (Black B2), براؤن" },
+      { key: "frameMaterial", label: "فریم میٹریل (Material)", placeholder: "مثال: پریمیم ایسیٹیٹ و میٹل" },
+      { key: "color", label: "فریم کا رنگ (Frame Color)", placeholder: "مثال: کالا, گولڈن" },
+      { key: "note", label: "اضافی تفصیلات (Note)", placeholder: "پریمیم کوالٹی اسٹائلش چشمہ" }
+    ],
+    contact: [
+      { key: "brand", label: "کلیکشن / برانڈ (Collection)", placeholder: "مثال: Bella Glow, Comfort Luxe, Vision 6" },
+      { key: "powerRange", label: "پاور رینج (Power Range)", placeholder: "مثال: -0.50 To -8.00" },
+      { key: "waterContent", label: "پانی کا تناسب (Water Content)", placeholder: "مثال: 55% W.C" },
+      { key: "baseCurve", label: "بیس کرو (B.C)", placeholder: "مثال: 8.60mm" },
+      { key: "dia", label: "قطر (Diameter Dia)", placeholder: "مثال: 14.50mm" },
+      { key: "schedule", label: "استعمال کی مدت (Schedule)", placeholder: "مثال: ایک ماہ (Monthly), 3 ماہ, سالانہ" },
+      { key: "cylinderPower", label: "سلنڈر پاور (Cylinder Power - اگر ٹورک ہو)", placeholder: "مثال: -0.50 To -4.00" },
+      { key: "note", label: "اضافی تفصیلات (Note)", placeholder: "قدرتی لک کے خوبصورت رنگ" }
+    ],
+    lens: [
+      { key: "brand", label: "برانڈ (Brand)", placeholder: "مثال: World Vision, HC Hardcoat" },
+      { key: "lensType", label: "شیشے کی قسم (Lens Type)", placeholder: "مثال: سنگل وژن (Single Vision)" },
+      { key: "coating", label: "کوٹنگ (Coating)", placeholder: "مثال: ہارڈ کوٹنگ (اینٹی اسکریچ), بلیو کٹ" },
+      { key: "index", label: "انڈیکس (Index)", placeholder: "مثال: 1.56, 1.61, 1.67" },
+      { key: "powerRange", label: "پاور کی حد (Power Range)", placeholder: "مثال: Plano to -6.00" },
+      { key: "thickness", label: "موٹائی (Thickness)", placeholder: "مثال: پتلا اور ہلکا" },
+      { key: "pairNote", label: "پیکنگ (Packing)", placeholder: "ایک جوڑی کی قیمت" },
+      { key: "note", label: "اضافی تفصیلات (Note)", placeholder: "اسفیرویکل ڈیزائن، 100% درست پاور" }
+    ]
+  };
+
   function populateSubcategories(cat, selectedType = '') {
-    const subcats = (window.SHOP_CONFIG && SHOP_CONFIG.subcategories && SHOP_CONFIG.subcategories[cat]) || [];
+    const list = SUBCATEGORIES_MAP[cat] || (window.SHOP_CONFIG && SHOP_CONFIG.subcategories && SHOP_CONFIG.subcategories[cat]) || [];
     prodType.innerHTML = '';
 
-    subcats.forEach(sub => {
+    let matched = false;
+    list.forEach(sub => {
       if (sub.id === 'all') return;
       const opt = document.createElement('option');
       opt.value = sub.id;
       opt.textContent = sub.name;
-      if (sub.id === selectedType) opt.selected = true;
+      if (sub.id === selectedType) {
+        opt.selected = true;
+        matched = true;
+      }
       prodType.appendChild(opt);
     });
+
+    // Custom option
+    const customOpt = document.createElement('option');
+    customOpt.value = '__custom__';
+    customOpt.textContent = '✏️ + نئی قسم خود لکھیں (Custom Subcategory)...';
+    if (selectedType && !matched) {
+      customOpt.selected = true;
+      if (prodTypeCustom) {
+        prodTypeCustom.value = selectedType;
+        prodTypeCustom.style.display = 'block';
+      }
+    } else {
+      if (prodTypeCustom) {
+        prodTypeCustom.value = '';
+        prodTypeCustom.style.display = 'none';
+      }
+    }
+    prodType.appendChild(customOpt);
   }
 
   function renderDynamicSpecs(cat, existingSpecs = {}) {
-    const specsMap = (window.SHOP_CONFIG && SHOP_CONFIG.specsFieldOrder && SHOP_CONFIG.specsFieldOrder[cat]) || [];
+    const fields = DYNAMIC_SPECS_FIELDS[cat] || [];
     dynamicSpecsContainer.innerHTML = '';
 
     const catTitles = {
-      frame: 'فریم کے مخصوص فیچرز (Frame Specs)',
-      sun: 'دھوپ کے چشمے کے مخصوص فیچرز (Sunglasses Specs)',
-      contact: 'کانٹیکٹ لینز کے مخصوص فیچرز (Contact Lens Specs)',
-      lens: 'نظر کے شیشے کے مخصوص فیچرز (Optical Lens Specs)'
+      frame: 'فریم کے مخصوص فیچرز (Frame Specifications)',
+      sun: 'دھوپ کے چشمے کے مخصوص فیچرز (Sunglasses Specifications)',
+      contact: 'کانٹیکٹ لینز کے مخصوص فیچرز (Contact Lens Specifications)',
+      lens: 'نظر کے شیشے کے مخصوص فیچرز (Optical Lens Specifications)'
     };
 
     specsCategoryTitle.textContent = catTitles[cat] || 'خصوصیات (Specs)';
 
-    // Skip fields that are already in the main form (code, condition, stock)
-    const skipKeys = ['code', 'stock'];
-
-    specsMap.forEach(item => {
-      if (skipKeys.includes(item.key)) return;
-
+    fields.forEach(item => {
       const val = existingSpecs[item.key] || '';
       const div = document.createElement('div');
       div.className = 'form-group';
 
       div.innerHTML = `
-        <label for="spec_${item.key}">${escapeHtml(item.label)} (${item.key})</label>
-        <input type="text" id="spec_${item.key}" class="form-control" name="spec_${item.key}" value="${escapeHtml(val)}" />
+        <label for="spec_${item.key}">${escapeHtml(item.label)}</label>
+        <input type="text" id="spec_${item.key}" class="form-control" name="spec_${item.key}" value="${escapeHtml(val)}" placeholder="${escapeHtml(item.placeholder || '')}" />
       `;
 
       dynamicSpecsContainer.appendChild(div);
@@ -596,22 +674,16 @@
   }
 
   function collectSpecsFromForm(cat) {
-    const specsMap = (window.SHOP_CONFIG && SHOP_CONFIG.specsFieldOrder && SHOP_CONFIG.specsFieldOrder[cat]) || [];
-    const specs = {};
+    const fields = DYNAMIC_SPECS_FIELDS[cat] || [];
+    const specs = {
+      code: prodCode.value.trim(),
+      stock: prodInStock.checked ? 'موجود ہے' : 'ختم ہے'
+    };
 
-    specsMap.forEach(item => {
-      if (item.key === 'code') {
-        specs.code = prodCode.value.trim();
-        return;
-      }
-      if (item.key === 'stock') {
-        specs.stock = prodInStock.checked ? 'موجود ہے' : 'ختم ہے';
-        return;
-      }
-
-      const input = document.getElementById(`spec_${item.key}`);
-      if (input) {
-        specs[item.key] = input.value.trim();
+    fields.forEach(f => {
+      const el = document.getElementById(`spec_${f.key}`);
+      if (el) {
+        specs[f.key] = el.value.trim();
       }
     });
 
@@ -661,6 +733,10 @@
     modalImagePreview.style.display = 'none';
     imagePlaceholder.style.display = 'block';
     prodCat.value = currentCategory !== 'all' ? currentCategory : 'frame';
+    if (prodTypeCustom) {
+      prodTypeCustom.value = '';
+      prodTypeCustom.style.display = 'none';
+    }
 
     populateSubcategories(prodCat.value);
     renderDynamicSpecs(prodCat.value);
@@ -672,6 +748,17 @@
     populateSubcategories(prodCat.value);
     renderDynamicSpecs(prodCat.value);
   });
+
+  if (prodType) {
+    prodType.addEventListener('change', () => {
+      if (prodType.value === '__custom__') {
+        prodTypeCustom.style.display = 'block';
+        prodTypeCustom.focus();
+      } else {
+        prodTypeCustom.style.display = 'none';
+      }
+    });
+  }
 
   prodInStock.addEventListener('change', () => {
     modalStockLabel.textContent = prodInStock.checked ? 'موجود ہے' : 'پوشیدہ';
@@ -733,10 +820,11 @@
 
       const specs = collectSpecsFromForm(cat);
       const isEditing = !!prodFormId.value;
+      const finalType = prodType.value === '__custom__' ? (prodTypeCustom.value.trim() || 'عام') : prodType.value;
       const productPayload = {
         code,
         cat,
-        type: prodType.value,
+        type: finalType,
         name: prodName.value.trim(),
         name_en: prodNameEn.value.trim() || null,
         price: parseFloat(prodPrice.value) || 0,
@@ -811,69 +899,6 @@
     } finally {
       btnConfirmDelete.disabled = false;
       btnConfirmDelete.textContent = 'ہاں، ڈیلیٹ کریں';
-    }
-  });
-
-  // ==================== 1-CLICK SYNC CATALOG ====================
-
-  btnSyncCatalog.addEventListener('click', () => {
-    syncProgressContainer.style.display = 'none';
-    syncProgressBar.style.width = '0%';
-    openModal(syncModal);
-  });
-
-  btnStartSync.addEventListener('click', async () => {
-    if (!supabaseClient) return;
-
-    btnStartSync.disabled = true;
-    syncProgressContainer.style.display = 'block';
-
-    try {
-      const res = await fetch('products.json?v=' + Date.now());
-      if (!res.ok) throw new Error('products.json فائل دستیاب نہیں ہے');
-      const seedProducts = await res.json();
-
-      const total = seedProducts.length;
-      syncProgressText.textContent = `0 / ${total}`;
-
-      const batchSize = 25;
-      for (let i = 0; i < total; i += batchSize) {
-        const batch = seedProducts.slice(i, i + batchSize).map(p => ({
-          id: p.id,
-          code: p.code,
-          cat: p.cat,
-          type: p.type || '',
-          name: p.name,
-          name_en: p.nameEn || null,
-          price: p.price || 0,
-          gender: p.gender || 'سب کے لیے',
-          img: p.img,
-          stock: p.stock || 'موجود ہے',
-          in_stock: p.inStock !== false,
-          featured: !!p.featured,
-          specs: p.specs || {}
-        }));
-
-        const { error } = await supabaseClient
-          .from('products')
-          .upsert(batch, { onConflict: 'code' });
-
-        if (error) throw error;
-
-        const currentCount = Math.min(i + batchSize, total);
-        const percent = Math.round((currentCount / total) * 100);
-        syncProgressBar.style.width = percent + '%';
-        syncProgressText.textContent = `${currentCount} / ${total} (${percent}%)`;
-      }
-
-      showToast(`تمام ${total} مصنوعات کامیابی سے Supabase میں سنک ہو گئیں!`, 'success');
-      closeModal(syncModal);
-      await loadProducts();
-    } catch (err) {
-      console.error('Sync error:', err);
-      showToast('سنک کرنے میں خرابی: ' + err.message, 'error');
-    } finally {
-      btnStartSync.disabled = false;
     }
   });
 

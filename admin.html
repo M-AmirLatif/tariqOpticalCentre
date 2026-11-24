@@ -209,11 +209,6 @@
             <span>نیا پروڈکٹ</span>
           </button>
 
-          <button id="btnSyncCatalog" class="btn btn-secondary" title="موجودہ 137 مصنوعات کو سپابیس میں اپلوڈ کریں">
-            <span>🔄</span>
-            <span>کیٹلاگ سنک</span>
-          </button>
-
           <button id="btnRefresh" class="btn btn-secondary btn-icon" title="ری فریش">
             <span>🔃</span>
           </button>
@@ -286,6 +281,7 @@
               <select id="prodType" class="form-control" required>
                 <!-- Populated dynamically via JS -->
               </select>
+              <input type="text" id="prodTypeCustom" class="form-control" placeholder="یہاں نئی قسم یا برانڈ کا نام لکھیں..." style="display: none; margin-top: 0.5rem;" />
             </div>
           </div>
 
@@ -401,39 +397,11 @@
     </div>
   </div>
 
-  <!-- 3. Sync Catalog Modal -->
-  <div id="syncModal" class="modal-backdrop">
-    <div class="modal-content" style="max-width: 480px; text-align: center;">
-      <div class="modal-header">
-        <h3>🔄 کیٹلاگ سپابیس میں سنک کریں</h3>
-        <button type="button" class="btn btn-secondary btn-sm close-modal-btn">&times;</button>
-      </div>
-      <div class="modal-body">
-        <p style="font-size: 0.9rem; margin-bottom: 1rem;">
-          کیا آپ موجودہ تمام <strong>137 پروڈکٹس</strong> کو سپابیس کلاؤڈ ڈیٹا بیس میں اپلوڈ / سنک کرنا چاہتے ہیں؟
-        </p>
-        <div id="syncProgressContainer" style="display: none; margin: 1.5rem 0;">
-          <div style="display: flex; justify-content: space-between; font-size: 0.8rem; margin-bottom: 0.4rem;">
-            <span>پیش رفت:</span>
-            <span id="syncProgressText" class="ltr-text">0 / 137</span>
-          </div>
-          <div style="height: 8px; background: var(--bg-input); border-radius: 4px; overflow: hidden;">
-            <div id="syncProgressBar" style="width: 0%; height: 100%; background: var(--gold); transition: width 0.3s;"></div>
-          </div>
-        </div>
-      </div>
-      <div class="modal-footer" style="justify-content: center;">
-        <button type="button" class="btn btn-secondary close-modal-btn">منسوخ</button>
-        <button type="button" id="btnStartSync" class="btn btn-primary">شروع کریں</button>
-      </div>
-    </div>
-  </div>
-
   <!-- Toast Container -->
   <div id="toastContainer" class="toast-container"></div>
 
   <!-- Scripts -->
-  <script src="js/config.js?v=20261124_1425"></script>
-  <script src="js/admin.js?v=20261124_1425"></script>
+  <script src="js/config.js?v=20261124_1445"></script>
+  <script src="js/admin.js?v=20261124_1445"></script>
 </body>
 </html>
