@@ -16,7 +16,7 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <!-- Admin Styles -->
-  <link rel="stylesheet" href="css/admin.css?v=20261124_1405" />
+  <link rel="stylesheet" href="css/admin.css?v=20261124_1510" />
 </head>
 <body>
 
@@ -264,7 +264,7 @@
         <input type="hidden" id="prodFormId" />
 
         <div class="modal-body">
-          <!-- Step 1: Category & Subcategory -->
+          <!-- Category & Subcategory -->
           <div class="form-row-2">
             <div class="form-group">
               <label for="prodCat">کیٹیگری (Category) *</label>
@@ -281,11 +281,11 @@
               <select id="prodType" class="form-control" required>
                 <!-- Populated dynamically via JS -->
               </select>
-              <input type="text" id="prodTypeCustom" class="form-control" placeholder="یہاں نئی قسم یا برانڈ کا نام لکھیں..." style="display: none; margin-top: 0.5rem;" />
+              <input type="text" id="prodTypeCustom" class="form-control" placeholder="یہاں نئی قسم یا برانڈ لکھیں..." style="display: none; margin-top: 0.4rem;" />
             </div>
           </div>
 
-          <!-- Step 2: Code, Urdu Name, English Name -->
+          <!-- Code, Price, and Stock Status -->
           <div class="form-row-3">
             <div class="form-group">
               <label for="prodCode">ماڈل کوڈ (Code) *</label>
@@ -294,74 +294,50 @@
 
             <div class="form-group">
               <label for="prodPrice">قیمت (Price in PKR) *</label>
-              <input type="number" id="prodPrice" class="form-control ltr-text" placeholder="2500" min="0" required />
+              <input type="number" id="prodPrice" class="form-control ltr-text" placeholder="2250" min="0" required />
             </div>
 
             <div class="form-group">
-              <label for="prodGender">کس کے لیے (Gender)</label>
-              <select id="prodGender" class="form-control">
-                <option value="سب کے لیے">سب کے لیے (Unisex)</option>
-                <option value="مردانہ">مردانہ (Men)</option>
-                <option value="زنانہ">زنانہ (Women)</option>
-                <option value="بچوں کے لیے">بچوں کے لیے (Kids)</option>
+              <label for="prodInStock">اسٹاک حالت (Stock)</label>
+              <select id="prodInStock" class="form-control">
+                <option value="true">🟢 دستیاب ہے (In Stock)</option>
+                <option value="false">🔴 ختم ہے (Out of Stock / Hidden)</option>
               </select>
             </div>
           </div>
 
-          <div class="form-row-2">
-            <div class="form-group">
-              <label for="prodName">پروڈکٹ کا نام (اردو) *</label>
-              <input type="text" id="prodName" class="form-control" placeholder="مثال: رے بین اسکوائر فریم" required />
-            </div>
-
-            <div class="form-group">
-              <label for="prodNameEn">English Name (اختیاری)</label>
-              <input type="text" id="prodNameEn" class="form-control ltr-text" placeholder="e.g. Ray-Ban Square Frame" />
-            </div>
-          </div>
-
-          <!-- Step 3: Stock Status & Visibility -->
-          <div class="form-group" style="background: var(--bg-card); padding: 0.75rem 1rem; border-radius: var(--radius-md); border: 1px solid var(--border-color); display: flex; align-items: center; justify-content: space-between;">
-            <div>
-              <div style="font-weight: 600; color: var(--text-main); font-size: 0.9rem;">اسٹاک کی دستیابی (In Stock / Visible)</div>
-              <div style="font-size: 0.775rem; color: var(--text-muted);">اگر یہ بند ہو گا تو پروڈکٹ ویب سائٹ پر گاہکوں سے پوشیدہ ہو جائے گی۔</div>
-            </div>
-            <label class="toggle-switch">
-              <input type="checkbox" id="prodInStock" checked />
-              <span class="slider"></span>
-              <span class="toggle-label" id="modalStockLabel">موجود ہے</span>
-            </label>
-          </div>
-
-          <!-- Step 4: Image Upload / URL -->
+          <!-- Product Name / Title -->
           <div class="form-group">
-            <label>تصویر (Image) *</label>
-            <div class="image-upload-wrapper" id="imageUploadWrapper">
-              <input type="file" id="prodImageFile" accept="image/*" style="display: none;" />
-              <img id="modalImagePreview" class="image-preview" alt="Preview" />
-              <div id="imagePlaceholder">
-                <span style="font-size: 2rem;">📸</span>
-                <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.4rem;">
-                  تصویر منتخب کرنے کے لیے یہاں کلک کریں (یا فائل ڈریگ کریں)
-                </p>
-                <span style="font-size: 0.75rem; color: var(--gold);">Supabase Storage پر خودکار اپلوڈ</span>
-              </div>
-            </div>
-
-            <div style="margin-top: 0.5rem;">
-              <input type="text" id="prodImageUrl" class="form-control ltr-text" placeholder="یا تصویر کا URL / لوکل پاتھ درج کریں (e.g. images/frames/81st.webp)" />
-            </div>
+            <label for="prodName">پروڈکٹ کا نام و ماڈل (Product Name & Model) *</label>
+            <input type="text" id="prodName" class="form-control" placeholder="مثال: TR. Porsche Tr87011 یا Hermes B2 Black" required />
           </div>
 
-          <!-- Step 5: Dynamic Category Specific Specs -->
-          <div class="specs-section">
+          <!-- Category Specific Necessary Specs Only -->
+          <div class="specs-section" style="margin-top: 0.5rem; margin-bottom: 1rem;">
             <div class="specs-section-title">
-              <span>⚙️</span>
-              <span id="specsCategoryTitle">فریم کے مخصوص فیچرز (Specifications)</span>
+              <span>👓</span>
+              <span id="specsCategoryTitle">ضروری تفصیلات (Product Details)</span>
             </div>
             <div id="dynamicSpecsContainer" class="form-row-2">
               <!-- Dynamically populated based on category -->
             </div>
+          </div>
+
+          <!-- Image Upload -->
+          <div class="form-group">
+            <label>پروڈکٹ کی تصویر (Product Photo) *</label>
+            <div class="image-upload-wrapper" id="imageUploadWrapper" style="padding: 0.75rem;">
+              <input type="file" id="prodImageFile" accept="image/*" style="display: none;" />
+              <img id="modalImagePreview" class="image-preview" alt="Preview" style="max-height: 110px;" />
+              <div id="imagePlaceholder">
+                <span style="font-size: 1.8rem;">📸</span>
+                <p style="font-size: 0.85rem; color: var(--gold); margin-top: 0.25rem;">
+                  تصویر منتخب کرنے کے لیے یہاں کلک کریں
+                </p>
+                <span style="font-size: 0.725rem; color: var(--text-muted);">خودکار طور پر سپابیس میں اپلوڈ ہو جائے گی</span>
+              </div>
+            </div>
+            <input type="hidden" id="prodImageUrl" />
           </div>
 
         </div>
@@ -401,7 +377,7 @@
   <div id="toastContainer" class="toast-container"></div>
 
   <!-- Scripts -->
-  <script src="js/config.js?v=20261124_1445"></script>
-  <script src="js/admin.js?v=20261124_1445"></script>
+  <script src="js/config.js?v=20261124_1510"></script>
+  <script src="js/admin.js?v=20261124_1510"></script>
 </body>
 </html>

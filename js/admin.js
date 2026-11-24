@@ -429,13 +429,11 @@
             </div>
           </td>
 
-          <!-- Stock Toggle Switch -->
+          <!-- Stock Status Button -->
           <td>
-            <label class="toggle-switch" title="${p.in_stock ? 'ویب سائٹ پر دکھائی دے رہا ہے' : 'ویب سائٹ سے پوشیدہ ہے'}">
-              <input type="checkbox" ${p.in_stock ? 'checked' : ''} onchange="toggleProductStock(${p.id}, this.checked)" />
-              <span class="slider"></span>
-              <span class="toggle-label">${p.in_stock ? 'موجود ہے' : 'پوشیدہ'}</span>
-            </label>
+            <button type="button" class="stock-toggle-btn ${p.in_stock ? 'in-stock' : 'out-of-stock'}" onclick="toggleProductStock(${p.id}, ${!p.in_stock})" title="اسٹیٹس تبدیل کرنے کے لیے کلک کریں">
+              ${p.in_stock ? '🟢 موجود ہے' : '🔴 پوشیدہ'}
+            </button>
           </td>
 
           <!-- Actions -->
@@ -491,8 +489,12 @@
         } else {
           tr.classList.add('out-of-stock-row');
         }
-        const label = tr.querySelector('.toggle-label');
-        if (label) label.textContent = newInStock ? 'موجود ہے' : 'پوشیدہ';
+        const btn = tr.querySelector('.stock-toggle-btn');
+        if (btn) {
+          btn.className = `stock-toggle-btn ${newInStock ? 'in-stock' : 'out-of-stock'}`;
+          btn.innerHTML = newInStock ? '🟢 موجود ہے' : '🔴 پوشیدہ';
+          btn.setAttribute('onclick', `toggleProductStock(${id}, ${!newInStock})`);
+        }
       }
 
       showToast(`پروڈکٹ کا اسٹیٹس اب "${newInStock ? 'دستیاب / ظاہر' : 'پوشیدہ / ختم'}" کر دیا گیا ہے۔`, 'success');
@@ -539,74 +541,53 @@
 
   const SUBCATEGORIES_MAP = {
     frame: [
-      { id: "چوکور", name: "چوکور (Rectangle / Square)" },
+      { id: "چوکور", name: "چوکور (Square)" },
       { id: "گول", name: "گول (Round)" },
       { id: "کیٹ آئی", name: "کیٹ آئی (Cat-Eye)" },
       { id: "بغیر فریم", name: "بغیر فریم (Rimless)" },
-      { id: "بچوں کے", name: "بچوں کے فریم (Kids)" }
+      { id: "بچوں کے", name: "بچوں کے (Kids)" }
     ],
     sun: [
-      { id: "پروٹیکٹو", name: "پروٹیکٹو (100% UV Protective)" },
-      { id: "اسٹائلش", name: "اسٹائلش لک (Stylish Look)" },
-      { id: "برانڈڈ", name: "برانڈڈ (Gucci, Hermes, YSL)" },
+      { id: "پروٹیکٹو", name: "پروٹیکٹو (UV)" },
+      { id: "اسٹائلش", name: "اسٹائلش (Stylish)" },
+      { id: "برانڈڈ", name: "برانڈڈ (Branded)" },
       { id: "ویفیرر", name: "ویفیرر (Wayfarer)" }
     ],
     contact: [
-      { id: "Bella", name: "بیلا (Bella)" },
-      { id: "Comfort", name: "کمفرٹ (Comfort)" },
-      { id: "Comfort. Toric", name: "کمفرٹ ٹورک (Toric)" },
-      { id: "Comfort By Pretty", name: "کمفرٹ بائے پریٹی (Pretty)" },
-      { id: "New Bio Transparent", name: "نیو بائیو ٹرانسپیرنٹ (Bio)" },
-      { id: "Adore", name: "ایڈور (Adore)" },
-      { id: "Vision 6", name: "ویژن 6 (Vision 6)" }
+      { id: "Bella", name: "Bella" },
+      { id: "Comfort", name: "Comfort" },
+      { id: "Comfort. Toric", name: "Comfort Toric" },
+      { id: "Comfort By Pretty", name: "Pretty" },
+      { id: "New Bio Transparent", name: "Bio" },
+      { id: "Adore", name: "Adore" },
+      { id: "Vision 6", name: "Vision 6" }
     ],
     lens: [
-      { id: "سادہ", name: "سادہ / سنگل وژن (Single Vision)" },
-      { id: "ہارڈ کوٹنگ (اینٹی اسکریچ)", name: "ہارڈ کوٹنگ (Anti-Scratch)" },
-      { id: "بلیو کٹ + فوٹو کرومک", name: "بلیو کٹ + دھوپ چھاؤں (Blue Cut + Photo)" },
+      { id: "سادہ", name: "سادہ (Single Vision)" },
+      { id: "ہارڈ کوٹنگ (اینٹی اسکریچ)", name: "ہارڈ کوٹ (Hardcoat)" },
+      { id: "بلیو کٹ + فوٹو کرومک", name: "بلیو کٹ + فوٹو کرومک" },
       { id: "فوٹو کرومک (دھوپ چھاؤں)", name: "فوٹو کرومک (Photochromic)" },
-      { id: "بلیو کٹ (Hard Multi Coating)", name: "اینٹی بلیو لائٹ (Blue Cut HMC)" }
+      { id: "بلیو کٹ (Hard Multi Coating)", name: "اینٹی بلیو لائٹ (Blue Cut)" }
     ]
   };
 
   const DYNAMIC_SPECS_FIELDS = {
     frame: [
-      { key: "brand", label: "برانڈ / کمپنی (Brand)", placeholder: "مثال: Porsche, Gucci, Ray-Ban" },
-      { key: "material", label: "میٹریل (Material)", placeholder: "مثال: پلاسٹک (TR90), میٹل, ایسیٹیٹ" },
-      { key: "shape", label: "فریم کی شکل (Shape)", placeholder: "مثال: چوکور, گول, کیٹ آئی" },
-      { key: "size", label: "سائز (Size)", placeholder: "مثال: 52-18-140" },
-      { key: "color", label: "رنگ (Color)", placeholder: "مثال: کالا, براؤن, نیلا" },
-      { key: "flexible", label: "لچکدار (Flexible)", placeholder: "ہاں / نہیں" },
-      { key: "note", label: "اضافی تفصیلات (Note)", placeholder: "خوبصورت اور مضبوط ڈیزائن" }
+      { key: "size", label: "سائز (Size)", placeholder: "مثال: 52" },
+      { key: "sideLength", label: "ڈنڈی لمبائی (Side Length)", placeholder: "مثال: 140" },
+      { key: "material", label: "میٹریل و رنگ (Material & Color)", placeholder: "مثال: TR90 کالا, میٹل گولڈن" }
     ],
     sun: [
-      { key: "brand", label: "برانڈ (Brand)", placeholder: "مثال: Hermes, Gucci, Saint Laurent" },
-      { key: "uv", label: "UV تحفظ (UV Protection)", placeholder: "100% UV Protection / UV400" },
-      { key: "polarized", label: "پولرائزڈ (Polarized)", placeholder: "ہاں / نہیں" },
-      { key: "lensColor", label: "شیشے کا رنگ (Lens Color)", placeholder: "مثال: کالا (Black B2), براؤن" },
-      { key: "frameMaterial", label: "فریم میٹریل (Material)", placeholder: "مثال: پریمیم ایسیٹیٹ و میٹل" },
-      { key: "color", label: "فریم کا رنگ (Frame Color)", placeholder: "مثال: کالا, گولڈن" },
-      { key: "note", label: "اضافی تفصیلات (Note)", placeholder: "پریمیم کوالٹی اسٹائلش چشمہ" }
+      { key: "color", label: "رنگ (Color)", placeholder: "مثال: B2 Black, Brown" },
+      { key: "uv", label: "تحفظ (UV Protection)", placeholder: "مثال: 100% UV Protection" }
     ],
     contact: [
-      { key: "brand", label: "کلیکشن / برانڈ (Collection)", placeholder: "مثال: Bella Glow, Comfort Luxe, Vision 6" },
       { key: "powerRange", label: "پاور رینج (Power Range)", placeholder: "مثال: -0.50 To -8.00" },
-      { key: "waterContent", label: "پانی کا تناسب (Water Content)", placeholder: "مثال: 55% W.C" },
-      { key: "baseCurve", label: "بیس کرو (B.C)", placeholder: "مثال: 8.60mm" },
-      { key: "dia", label: "قطر (Diameter Dia)", placeholder: "مثال: 14.50mm" },
-      { key: "schedule", label: "استعمال کی مدت (Schedule)", placeholder: "مثال: ایک ماہ (Monthly), 3 ماہ, سالانہ" },
-      { key: "cylinderPower", label: "سلنڈر پاور (Cylinder Power - اگر ٹورک ہو)", placeholder: "مثال: -0.50 To -4.00" },
-      { key: "note", label: "اضافی تفصیلات (Note)", placeholder: "قدرتی لک کے خوبصورت رنگ" }
+      { key: "diaBc", label: "قطر و بیس کرو (B.C / Dia)", placeholder: "مثال: 8.60mm / 14.5mm" }
     ],
     lens: [
-      { key: "brand", label: "برانڈ (Brand)", placeholder: "مثال: World Vision, HC Hardcoat" },
-      { key: "lensType", label: "شیشے کی قسم (Lens Type)", placeholder: "مثال: سنگل وژن (Single Vision)" },
-      { key: "coating", label: "کوٹنگ (Coating)", placeholder: "مثال: ہارڈ کوٹنگ (اینٹی اسکریچ), بلیو کٹ" },
-      { key: "index", label: "انڈیکس (Index)", placeholder: "مثال: 1.56, 1.61, 1.67" },
       { key: "powerRange", label: "پاور کی حد (Power Range)", placeholder: "مثال: Plano to -6.00" },
-      { key: "thickness", label: "موٹائی (Thickness)", placeholder: "مثال: پتلا اور ہلکا" },
-      { key: "pairNote", label: "پیکنگ (Packing)", placeholder: "ایک جوڑی کی قیمت" },
-      { key: "note", label: "اضافی تفصیلات (Note)", placeholder: "اسفیرویکل ڈیزائن، 100% درست پاور" }
+      { key: "coating", label: "کوٹنگ (Coating)", placeholder: "مثال: ہارڈ کوٹنگ, اینٹی اسکریچ" }
     ]
   };
 
@@ -630,7 +611,7 @@
     // Custom option
     const customOpt = document.createElement('option');
     customOpt.value = '__custom__';
-    customOpt.textContent = '✏️ + نئی قسم خود لکھیں (Custom Subcategory)...';
+    customOpt.textContent = '✏️ + نئی قسم خود لکھیں (Custom)...';
     if (selectedType && !matched) {
       customOpt.selected = true;
       if (prodTypeCustom) {
@@ -651,10 +632,10 @@
     dynamicSpecsContainer.innerHTML = '';
 
     const catTitles = {
-      frame: 'فریم کے مخصوص فیچرز (Frame Specifications)',
-      sun: 'دھوپ کے چشمے کے مخصوص فیچرز (Sunglasses Specifications)',
-      contact: 'کانٹیکٹ لینز کے مخصوص فیچرز (Contact Lens Specifications)',
-      lens: 'نظر کے شیشے کے مخصوص فیچرز (Optical Lens Specifications)'
+      frame: 'فریم کے ضروری فیچرز (Frame Details)',
+      sun: 'دھوپ کے چشمے کی تفصیلات (Sunglasses Details)',
+      contact: 'کانٹیکٹ لینز کی تفصیلات (Contact Lens Details)',
+      lens: 'نظر کے شیشے کی تفصیلات (Optical Lens Details)'
     };
 
     specsCategoryTitle.textContent = catTitles[cat] || 'خصوصیات (Specs)';
@@ -677,7 +658,7 @@
     const fields = DYNAMIC_SPECS_FIELDS[cat] || [];
     const specs = {
       code: prodCode.value.trim(),
-      stock: prodInStock.checked ? 'موجود ہے' : 'ختم ہے'
+      stock: (prodInStock.value === 'true') ? 'موجود ہے' : 'ختم ہے'
     };
 
     fields.forEach(f => {
@@ -701,11 +682,8 @@
     prodCat.value = p.cat;
     prodCode.value = p.code || '';
     prodPrice.value = p.price || 0;
-    prodGender.value = p.gender || 'سب کے لیے';
     prodName.value = p.name || '';
-    prodNameEn.value = p.name_en || '';
-    prodInStock.checked = !!p.in_stock;
-    modalStockLabel.textContent = p.in_stock ? 'موجود ہے' : 'پوشیدہ';
+    prodInStock.value = p.in_stock ? 'true' : 'false';
     prodImageUrl.value = p.img || '';
 
     // Image preview
@@ -728,8 +706,7 @@
     modalTitle.textContent = '➕ نیا پروڈکٹ شامل کریں';
     productForm.reset();
     prodFormId.value = '';
-    prodInStock.checked = true;
-    modalStockLabel.textContent = 'موجود ہے';
+    prodInStock.value = 'true';
     modalImagePreview.style.display = 'none';
     imagePlaceholder.style.display = 'block';
     prodCat.value = currentCategory !== 'all' ? currentCategory : 'frame';
@@ -821,17 +798,18 @@
       const specs = collectSpecsFromForm(cat);
       const isEditing = !!prodFormId.value;
       const finalType = prodType.value === '__custom__' ? (prodTypeCustom.value.trim() || 'عام') : prodType.value;
+      const isInStock = prodInStock.value === 'true';
       const productPayload = {
         code,
         cat,
         type: finalType,
         name: prodName.value.trim(),
-        name_en: prodNameEn.value.trim() || null,
+        name_en: null,
         price: parseFloat(prodPrice.value) || 0,
-        gender: prodGender.value,
+        gender: 'سب کے لیے',
         img: imgPath,
-        stock: prodInStock.checked ? 'موجود ہے' : 'ختم ہے',
-        in_stock: prodInStock.checked,
+        stock: isInStock ? 'موجود ہے' : 'ختم ہے',
+        in_stock: isInStock,
         specs
       };
 
