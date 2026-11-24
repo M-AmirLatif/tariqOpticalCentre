@@ -246,6 +246,33 @@
 
       allProducts = data || [];
 
+      // Auto-heal any zero prices from products.json
+      const zeroProducts = allProducts.filter(p => !p.price || parseFloat(p.price) === 0);
+      if (zeroProducts.length > 0) {
+        try {
+          const res = await fetch('products.json?v=' + Date.now());
+          if (res.ok) {
+            const jsonProducts = await res.json();
+            const priceMap = {};
+            jsonProducts.forEach(jp => {
+              if (jp.price && parseFloat(jp.price) > 0) {
+                priceMap[jp.code] = parseFloat(jp.price);
+              }
+            });
+
+            for (const zp of zeroProducts) {
+              if (priceMap[zp.code]) {
+                const newPrice = priceMap[zp.code];
+                zp.price = newPrice;
+                await supabaseClient.from('products').update({ price: newPrice }).eq('id', zp.id);
+              }
+            }
+          }
+        } catch (e) {
+          console.warn('Auto-healing zero prices warning:', e);
+        }
+      }
+
       // If Supabase table is completely empty, offer quick sync from products.json
       if (allProducts.length === 0) {
         openModal(syncModal);
