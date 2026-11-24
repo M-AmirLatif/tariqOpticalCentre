@@ -820,21 +820,15 @@ img {
   gap: 1rem;
 }
 
-@media (max-width: 599px) {
-  .category-tiles-grid .cat-tile-card:last-child {
-    grid-column: 1 / -1;
-  }
-}
-
 @media (min-width: 600px) {
   .category-tiles-grid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media (min-width: 900px) {
   .category-tiles-grid {
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(4, 1fr);
   }
 }
 

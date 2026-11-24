@@ -48,9 +48,7 @@ const SHOP_CONFIG = {
     { id: "frame", name: "فریم", icon: "👓" },
     { id: "sun", name: "دھوپ کے چشمے", icon: "🕶️" },
     { id: "lens", name: "لینز", icon: "🔍" },
-    { id: "contact", name: "کانٹیکٹ لینز", icon: "👁️" },
-    { id: "mirror", name: "آئینے", icon: "🪞" },
-    { id: "accessory", name: "لوازمات", icon: "🧰" }
+    { id: "contact", name: "کانٹیکٹ لینز", icon: "👁️" }
   ],
 
   // ذیلی کیٹیگریز (Subcategories Chips)
@@ -87,18 +85,6 @@ const SHOP_CONFIG = {
       { id: "New Bio Transparent", name: "نیو بائیو ٹرانسپیرنٹ (Bio)" },
       { id: "Adore", name: "ایڈور (Adore)" },
       { id: "Vision 6", name: "ویژن 6 (Vision 6)" }
-    ],
-    mirror: [
-      { id: "all", name: "سب آئینے" },
-      { id: "گول", name: "گول آئینہ" },
-      { id: "چوکور", name: "چوکور آئینہ" },
-      { id: "کاؤنٹر", name: "کاؤنٹر ٹرائل آئینہ" }
-    ],
-    accessory: [
-      { id: "all", name: "سب لوازمات" },
-      { id: "کیس و اسپرے", name: "چشمہ باکس و کلینر" },
-      { id: "کپڑا", name: "مائیکرو فائبر کپڑا" },
-      { id: "چین", name: "چشمے کی چین" }
     ]
   },
 
@@ -162,28 +148,6 @@ const SHOP_CONFIG = {
       { key: "condition", label: "حالت" },
       { key: "stock", label: "دستیابی" },
       { key: "note", label: "اضافی تفصیلات" }
-    ],
-    mirror: [
-      { key: "code", label: "ماڈل کوڈ" },
-      { key: "brand", label: "برانڈ" },
-      { key: "color", label: "رنگ" },
-      { key: "size", label: "سائز" },
-      { key: "shapeMirror", label: "شکل" },
-      { key: "frameMaterial", label: "فریم میٹریل" },
-      { key: "useFor", label: "استعمال" },
-      { key: "condition", label: "حالت" },
-      { key: "note", label: "اضافی معلومات" }
-    ],
-    accessory: [
-      { key: "code", label: "ماڈل کوڈ" },
-      { key: "brand", label: "برانڈ" },
-      { key: "kind", label: "قسم" },
-      { key: "material", label: "میٹریل" },
-      { key: "color", label: "رنگ" },
-      { key: "size", label: "سائز" },
-      { key: "quantity", label: "تعداد" },
-      { key: "condition", label: "حالت" },
-      { key: "note", label: "اضافی معلومات" }
     ]
   },
 

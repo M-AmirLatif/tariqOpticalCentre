@@ -189,56 +189,6 @@
     }
   },
   {
-    "id": 10,
-    "cat": "mirror",
-    "code": "M-401",
-    "type": "عام",
-    "name": "روٹیٹنگ کاؤنٹر ٹرائل مرر",
-    "price": 2200,
-    "gender": "unisex",
-    "img": "images/mirrors/sample-counter-mirror.webp",
-    "stock": "موجود ہے",
-    "inStock": true,
-    "featured": false,
-    "specs": {
-      "code": "M-401",
-      "brand": "Tariq Optical",
-      "color": "گولڈن و سفید",
-      "condition": "نیا",
-      "stock": "موجود ہے",
-      "size": "8 انچ قطر",
-      "shapeMirror": "گول",
-      "frameMaterial": "پیتل و میٹل",
-      "useFor": "دکان و کاؤنٹر",
-      "note": "ڈبل سائیڈ گھومنے والا واضح ٹرائل آئینہ"
-    }
-  },
-  {
-    "id": 11,
-    "cat": "accessory",
-    "code": "A-501",
-    "type": "کیس و اسپرے",
-    "name": "پریمیم چشمہ کور و لینز واش کٹ",
-    "price": 450,
-    "gender": "unisex",
-    "img": "images/accessories/sample-case-cleaning.webp",
-    "stock": "موجود ہے",
-    "inStock": true,
-    "featured": false,
-    "specs": {
-      "code": "A-501",
-      "brand": "Tariq Optical",
-      "color": "نیوی بلیو",
-      "condition": "نیا",
-      "stock": "موجود ہے",
-      "kind": "کیس و اسپرے",
-      "material": "ہارڈ شیل و مائیکرو فائبر",
-      "size": "معیاری چشمہ سائز",
-      "quantity": "1 سیٹ (باکس + اسپرے + کپڑا)",
-      "note": "چشمے کی مکمل حفاظت اور صفائی کا معیاری سیٹ"
-    }
-  },
-  {
     "id": 12,
     "cat": "lens",
     "code": "L-305",
