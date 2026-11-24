@@ -359,12 +359,23 @@
         </td>
       </tr>
     `;
+    const mobileCardsContainer = document.getElementById('mobileCardsContainer');
+    if (mobileCardsContainer) {
+      mobileCardsContainer.innerHTML = `
+        <div style="text-align: center; padding: 2.5rem; color: var(--text-muted);">
+          <span>⏳ ڈیٹا بیس سے مصنوعات لوڈ ہو رہی ہیں...</span>
+        </div>
+      `;
+    }
     emptyState.style.display = 'none';
   }
 
   function renderTable() {
+    const mobileCardsContainer = document.getElementById('mobileCardsContainer');
+
     if (filteredProducts.length === 0) {
       productsTableBody.innerHTML = '';
+      if (mobileCardsContainer) mobileCardsContainer.innerHTML = '';
       emptyState.style.display = 'block';
       return;
     }
@@ -452,6 +463,63 @@
     }).join('');
 
     productsTableBody.innerHTML = rowsHtml;
+
+    // Mobile Cards Rendering
+    if (mobileCardsContainer) {
+      const mobileCardsHtml = filteredProducts.map(p => {
+        const isOutOfStock = !p.in_stock;
+        const catIcon = categoryIcons[p.cat] || '📦';
+        const catName = categoryNames[p.cat] || p.cat;
+
+        return `
+          <div class="mobile-product-card ${isOutOfStock ? 'out-of-stock-card' : ''}" data-id="${p.id}">
+            <div class="mp-body">
+              <div class="mp-thumb-wrapper" onclick="previewImage('${escapeHtml(p.img || '')}')">
+                <img src="${escapeHtml(p.img || 'images/frames/placeholder.webp')}" alt="${escapeHtml(p.name || '')}" class="mp-thumb" onerror="this.src='data:image/svg+xml,<svg xmlns=\\'http://www.w3.org/2000/svg\\' viewBox=\\'0 0 100 100\\'><rect fill=\\'%23112332\\' width=\\'100\\' height=\\'100\\'/><text y=\\'.9em\\' font-size=\\'90\\'>👓</text></svg>'" />
+                <span class="mp-zoom-hint">🔍</span>
+              </div>
+
+              <div class="mp-details">
+                <div class="mp-top-line">
+                  <span class="prod-code-badge">${escapeHtml(p.code || '')}</span>
+                  <span class="cat-badge">
+                    <span>${catIcon}</span>
+                    <span>${catName}</span>
+                  </span>
+                  ${p.type ? `<span class="subcat-chip">${escapeHtml(p.type)}</span>` : ''}
+                </div>
+
+                <div class="mp-title">${escapeHtml(p.name || '')}</div>
+                ${p.name_en ? `<div class="mp-title-en">${escapeHtml(p.name_en)}</div>` : ''}
+              </div>
+            </div>
+
+            <div class="mp-footer">
+              <div class="mp-price-group">
+                <span class="mp-price-label">قیمت:</span>
+                <span class="price-currency">Rs.</span>
+                <input type="number" class="quick-price-input" value="${p.price || 0}" min="0" onchange="quickUpdatePrice(${p.id}, this.value)" title="قیمت تبدیل کر کے Enter دبائیں" />
+              </div>
+
+              <button type="button" class="stock-toggle-btn ${p.in_stock ? 'in-stock' : 'out-of-stock'}" onclick="toggleProductStock(${p.id}, ${!p.in_stock})" title="اسٹیٹس تبدیل کرنے کے لیے کلک کریں">
+                ${p.in_stock ? '🟢 موجود ہے' : '🔴 پوشیدہ'}
+              </button>
+
+              <div class="actions-group">
+                <button class="btn btn-secondary btn-icon" onclick="openEditModal(${p.id})" title="ترمیم کریں">
+                  <span>✏️</span>
+                </button>
+                <button class="btn btn-danger btn-icon" onclick="openDeleteModal(${p.id})" title="ڈیلیٹ کریں">
+                  <span>🗑️</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      mobileCardsContainer.innerHTML = mobileCardsHtml;
+    }
   }
 
   // ==================== INLINE ACTIONS ====================
@@ -497,6 +565,22 @@
         }
       }
 
+      // Update mobile card class without full re-render
+      const card = document.querySelector(`.mobile-product-card[data-id="${id}"]`);
+      if (card) {
+        if (newInStock) {
+          card.classList.remove('out-of-stock-card');
+        } else {
+          card.classList.add('out-of-stock-card');
+        }
+        const cardBtn = card.querySelector('.stock-toggle-btn');
+        if (cardBtn) {
+          cardBtn.className = `stock-toggle-btn ${newInStock ? 'in-stock' : 'out-of-stock'}`;
+          cardBtn.innerHTML = newInStock ? '🟢 موجود ہے' : '🔴 پوشیدہ';
+          cardBtn.setAttribute('onclick', `toggleProductStock(${id}, ${!newInStock})`);
+        }
+      }
+
       showToast(`پروڈکٹ کا اسٹیٹس اب "${newInStock ? 'دستیاب / ظاہر' : 'پوشیدہ / ختم'}" کر دیا گیا ہے۔`, 'success');
     } catch (err) {
       console.error('Toggle stock error:', err);
@@ -524,6 +608,11 @@
 
       const prod = allProducts.find(p => p.id === id);
       if (prod) prod.price = price;
+
+      // Sync both desktop and mobile price inputs
+      document.querySelectorAll(`[data-id="${id}"] .quick-price-input`).forEach(input => {
+        input.value = price;
+      });
 
       showToast(`قیمت کامیابی سے Rs. ${price.toLocaleString()} اپڈیٹ ہو گئی ہے۔`, 'success');
     } catch (err) {

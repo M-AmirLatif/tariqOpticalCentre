@@ -16,7 +16,7 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <!-- Admin Styles -->
-  <link rel="stylesheet" href="css/admin.css?v=20261124_1530" />
+  <link rel="stylesheet" href="css/admin.css?v=20261124_1545" />
 </head>
 <body>
 
@@ -215,8 +215,8 @@
         </div>
       </div>
 
-      <!-- Products Table View -->
-      <div class="table-container">
+      <!-- Products Table View (Desktop) -->
+      <div class="table-container desktop-only">
         <table class="admin-table">
           <thead>
             <tr>
@@ -237,6 +237,13 @@
             </tr>
           </tbody>
         </table>
+      </div>
+
+      <!-- Products Mobile Cards View (Mobile) -->
+      <div id="mobileCardsContainer" class="mobile-cards-container mobile-only">
+        <div style="text-align: center; padding: 2rem; color: var(--text-muted);">
+          ڈیٹا لوڈ ہو رہا ہے...
+        </div>
       </div>
 
       <!-- Empty State -->
