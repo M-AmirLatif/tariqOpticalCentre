@@ -393,19 +393,19 @@
       return `
         <tr data-id="${p.id}" class="${isOutOfStock ? 'out-of-stock-row' : ''}">
           <!-- Image -->
-          <td>
+          <td class="cell-thumb">
             <div class="prod-thumb-wrapper" onclick="previewImage('${escapeHtml(p.img || '')}')">
               <img src="${escapeHtml(p.img || 'images/frames/placeholder.webp')}" alt="${escapeHtml(p.name || '')}" class="prod-thumb" onerror="this.src='data:image/svg+xml,<svg xmlns=\\'http://www.w3.org/2000/svg\\' viewBox=\\'0 0 100 100\\'><rect fill=\\'%23112332\\' width=\\'100\\' height=\\'100\\'/><text y=\\'.9em\\' font-size=\\'90\\'>👓</text></svg>'" />
             </div>
           </td>
 
           <!-- Code -->
-          <td>
+          <td class="cell-code">
             <span class="prod-code-badge">${escapeHtml(p.code || '')}</span>
           </td>
 
           <!-- Name & Details -->
-          <td>
+          <td class="cell-info">
             <div class="prod-title-group">
               <span class="prod-name">${escapeHtml(p.name || '')}</span>
               ${p.name_en ? `<span class="prod-name-en">${escapeHtml(p.name_en)}</span>` : ''}
@@ -413,7 +413,7 @@
           </td>
 
           <!-- Category & Subcategory -->
-          <td>
+          <td class="cell-cat">
             <span class="cat-badge">
               <span>${catIcon}</span>
               <span>${catName}</span>
@@ -422,7 +422,7 @@
           </td>
 
           <!-- Price with Quick Edit -->
-          <td>
+          <td class="cell-price">
             <div class="price-display">
               <span class="price-currency">Rs.</span>
               <input type="number" class="quick-price-input" value="${p.price || 0}" min="0" onchange="quickUpdatePrice(${p.id}, this.value)" title="قیمت تبدیل کر کے Enter دبائیں" />
@@ -430,15 +430,15 @@
           </td>
 
           <!-- Stock Status Button -->
-          <td>
+          <td class="cell-stock">
             <button type="button" class="stock-toggle-btn ${p.in_stock ? 'in-stock' : 'out-of-stock'}" onclick="toggleProductStock(${p.id}, ${!p.in_stock})" title="اسٹیٹس تبدیل کرنے کے لیے کلک کریں">
               ${p.in_stock ? '🟢 موجود ہے' : '🔴 پوشیدہ'}
             </button>
           </td>
 
           <!-- Actions -->
-          <td style="text-align: center;">
-            <div style="display: inline-flex; gap: 0.4rem;">
+          <td class="cell-actions">
+            <div class="actions-group">
               <button class="btn btn-secondary btn-icon" onclick="openEditModal(${p.id})" title="ترمیم کریں">
                 <span>✏️</span>
               </button>
