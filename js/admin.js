@@ -266,6 +266,42 @@
         }
       }
 
+      // Auto-sync any missing products from products.json into Supabase (e.g. CL-213, CL-214)
+      if (currentUser) {
+        try {
+          const res = await fetch('products.json?v=' + Date.now());
+          if (res.ok) {
+            const jsonProducts = await res.json();
+            const existingCodes = new Set(allProducts.map(p => p.code));
+            const missing = jsonProducts.filter(jp => !existingCodes.has(jp.code));
+            if (missing.length > 0) {
+              for (const mp of missing) {
+                const rec = {
+                  code: mp.code,
+                  cat: mp.cat,
+                  type: mp.type || '',
+                  name: mp.name || '',
+                  name_en: mp.nameEn || '',
+                  price: mp.price || 0,
+                  gender: mp.gender || 'سب کے لیے',
+                  img: mp.img || '',
+                  stock: mp.stock || 'موجود ہے',
+                  in_stock: mp.inStock !== false,
+                  featured: mp.featured || false,
+                  specs: mp.specs || {}
+                };
+                const { data: inserted, error: insErr } = await supabaseClient.from('products').insert([rec]).select();
+                if (!insErr && inserted && inserted[0]) {
+                  allProducts.push(inserted[0]);
+                }
+              }
+            }
+          }
+        } catch (e) {
+          console.warn('Auto-sync missing products warning:', e);
+        }
+      }
+
       updateMetrics();
       applyFilters();
     } catch (err) {

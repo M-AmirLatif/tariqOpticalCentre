@@ -3787,5 +3787,65 @@
       "flexible": "لچکدار",
       "note": "ماڈل 85605 - ایکچوآئی اسمارٹ TR90 فریم، سائز 51، ڈنڈی کی لمبائی 140"
     }
+  },
+  {
+    "id": 142,
+    "cat": "contact",
+    "code": "CL-213",
+    "type": "ہفتہ وار لینز",
+    "name": "پریٹی 7 ڈے کلر لینز",
+    "nameEn": "Pretty 7 Day Soft Contact Lens",
+    "price": 3250,
+    "gender": "سب کے لیے",
+    "img": "images/contactpowerlenses/13th.webp",
+    "stock": "موجود ہے",
+    "inStock": true,
+    "featured": true,
+    "specs": {
+      "code": "CL-213",
+      "brand": "Pretty",
+      "subcat": "Pretty",
+      "color": "پاور آل کلرز (Power All Colors)",
+      "gender": "سب کے لیے",
+      "condition": "نیا",
+      "stock": "موجود ہے",
+      "material": "سافٹ ہائیڈروجل (Soft Contact Lens)",
+      "dia": "14.50 mm",
+      "baseCurve": "8.60 mm",
+      "powerRange": "-0.50 To -8.00",
+      "schedule": "7 دن / ہفتہ وار (Weekly Wear)",
+      "origin": "میڈ ان کوریا (Made In Korea)",
+      "note": "پریٹی 7 ڈے کلر لینز - بیس کرو 8.60mm، قطر 14.50mm، پاور رینج -0.50 تا -8.00، تمام کلرز میں دستیاب، ہفتہ وار استعمال، میڈ ان کوریا"
+    }
+  },
+  {
+    "id": 143,
+    "cat": "contact",
+    "code": "CL-214",
+    "type": "ٹرانسپیرنٹ لینز",
+    "name": "نیو بائیو سافٹ ٹرانسپیرنٹ لینز",
+    "nameEn": "New Bio Soft Transparent Contact Lens",
+    "price": 3000,
+    "gender": "سب کے لیے",
+    "img": "images/contactpowerlenses/14th.webp",
+    "stock": "موجود ہے",
+    "inStock": true,
+    "featured": true,
+    "specs": {
+      "code": "CL-214",
+      "brand": "New Bio",
+      "subcat": "New Bio",
+      "color": "ٹرانسپیرنٹ / کلیر (Transparent Clear)",
+      "gender": "سب کے لیے",
+      "condition": "نیا",
+      "stock": "موجود ہے",
+      "material": "سافٹ بائیو پولیمر (Bio Soft Contact Lens)",
+      "dia": "14.00 mm",
+      "baseCurve": "8.60 mm",
+      "powerRange": "-1.00 To -8.00",
+      "schedule": "ریگولر ویئر (Transparent Lenses)",
+      "origin": "میڈ ان کوریا (Made In Korea)",
+      "note": "نیو بائیو سافٹ ٹرانسپیرنٹ لینز - بیس کرو 8.60mm، قطر 14.00mm، پاور رینج -1.00 تا -8.00، نظر کے صاف و شفاف شیشے، میڈ ان کوریا"
+    }
   }
 ]

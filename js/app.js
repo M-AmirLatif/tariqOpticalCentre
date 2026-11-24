@@ -330,7 +330,7 @@
 
     // Fallback to static products.json
     try {
-      const res = await fetch('products.json?v=20261124_1210');
+      const res = await fetch('products.json?v=20261124_1605');
       if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
       const data = await res.json();
       state.allProducts = Array.isArray(data) ? data : [];
