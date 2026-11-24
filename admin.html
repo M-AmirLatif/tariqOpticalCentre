@@ -16,7 +16,7 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <!-- Admin Styles -->
-  <link rel="stylesheet" href="css/admin.css?v=20261124_01" />
+  <link rel="stylesheet" href="css/admin.css?v=20261124_1405" />
 </head>
 <body>
 
@@ -63,67 +63,33 @@
   <!-- Main Content Area -->
   <main class="admin-main">
 
-    <!-- 1. SETUP SCREEN: If Supabase Credentials Missing -->
-    <section id="setupSection" class="auth-wrapper" style="display: none;">
-      <div class="auth-card">
-        <div class="auth-icon">⚡</div>
-        <h2>سپابیس ڈیٹا بیس سیٹ اپ</h2>
-        <p>ایڈمن پینل کو فعال کرنے کے لیے اپنے Supabase پروجیکٹ کی معلومات درج کریں۔</p>
-        
-        <form id="setupForm">
-          <div class="form-group">
-            <label for="setupUrl">Supabase Project URL</label>
-            <input type="url" id="setupUrl" class="form-control ltr-text" placeholder="https://xyzabcdef.supabase.co" required />
-          </div>
-
-          <div class="form-group">
-            <label for="setupKey">Supabase Anon / Public Key</label>
-            <input type="password" id="setupKey" class="form-control ltr-text" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." required />
-          </div>
-
-          <button type="submit" class="btn btn-primary" style="width: 100%;">
-            <span>🔗 کنیکٹ کریں</span>
-          </button>
-        </form>
-
-        <div style="margin-top: 1.5rem; font-size: 0.8rem; color: var(--text-muted); text-align: right;">
-          <p>💡 <strong>طریقہ کار:</strong></p>
-          <ol style="margin-right: 1.25rem; margin-top: 0.4rem; line-height: 1.6;">
-            <li>Supabase.com پر پروجیکٹ بنائیں۔</li>
-            <li>پروجیکٹ کی <code>SQL Editor</code> میں جا کر <code>supabase_schema.sql</code> فائل رن کریں۔</li>
-            <li>Project Settings &gt; API سے URL اور anon key حاصل کریں۔</li>
-          </ol>
-        </div>
-      </div>
-    </section>
-
-    <!-- 2. LOGIN SCREEN: If User Not Authenticated -->
-    <section id="loginSection" class="auth-wrapper" style="display: none;">
+    <!-- LOGIN SCREEN: Secure Admin Authentication -->
+    <section id="loginSection" class="auth-wrapper">
       <div class="auth-card">
         <div class="auth-icon">🔐</div>
-        <h2>ایڈمن لاگ ان</h2>
-        <p>طارق آپٹیکل کی مصنوعات اور قیمتیں تبدیل کرنے کے لیے لاگ ان کریں۔</p>
+        <h2>ایڈمن لاگ ان (Admin Login)</h2>
+        <p>طارق آپٹیکل کی مصنوعات، قیمتیں اور اسٹاک تبدیل کرنے کے لیے لاگ ان کریں۔</p>
 
         <form id="loginForm">
           <div class="form-group">
             <label for="loginEmail">ای میل ایڈریس (Admin Email)</label>
-            <input type="email" id="loginEmail" class="form-control ltr-text" placeholder="admin@tariqoptical.com" required autocomplete="email" />
+            <input type="email" id="loginEmail" class="form-control ltr-text" placeholder="tariqaliaziz1992@gmail.com" value="tariqaliaziz1992@gmail.com" required autocomplete="email" />
           </div>
 
           <div class="form-group">
             <label for="loginPassword">پاس ورڈ (Password)</label>
-            <input type="password" id="loginPassword" class="form-control ltr-text" placeholder="••••••••" required autocomplete="current-password" />
+            <input type="password" id="loginPassword" class="form-control ltr-text" placeholder="••••••••" required autocomplete="current-password" autofocus />
           </div>
 
           <div id="loginAlert" style="display: none; padding: 0.6rem; border-radius: var(--radius-sm); margin-bottom: 1rem; font-size: 0.85rem;" class="btn-danger"></div>
 
           <button type="submit" id="btnLoginSubmit" class="btn btn-primary" style="width: 100%;">
-            <span>لاگ ان کریں</span>
+            <span>لاگ ان کریں (Login)</span>
           </button>
         </form>
 
         <p style="margin-top: 1.25rem; font-size: 0.775rem; color: var(--text-muted);">
-          سیکیور تصدیق بذریعہ Supabase Auth
+          سیکیور کلاؤڈ تصدیق بذریعہ Supabase Auth
         </p>
       </div>
     </section>
@@ -501,7 +467,7 @@
   <div id="toastContainer" class="toast-container"></div>
 
   <!-- Scripts -->
-  <script src="js/config.js?v=20261124_01"></script>
-  <script src="js/admin.js?v=20261124_01"></script>
+  <script src="js/config.js?v=20261124_1405"></script>
+  <script src="js/admin.js?v=20261124_1405"></script>
 </body>
 </html>

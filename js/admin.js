@@ -6,6 +6,10 @@
 (function () {
   'use strict';
 
+  // Hardcoded Supabase Configuration
+  const TOC_SUPABASE_URL = "https://iwtpzgkxdrjgoalpvcyu.supabase.co";
+  const TOC_SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml3dHB6Z2t4ZHJqZ29hbHB2Y3l1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTU1MDU0NTcsImV4cCI6MjExMTA4MTQ1N30.B7KwtbDuY97oOR-Qt-pPRJ9wFKie4i9y-54bX7A0XvE";
+
   // State Management
   let supabaseClient = null;
   let currentUser = null;
@@ -15,7 +19,6 @@
   let productToDelete = null;
 
   // DOM Elements
-  const setupSection = document.getElementById('setupSection');
   const loginSection = document.getElementById('loginSection');
   const dashboardSection = document.getElementById('dashboardSection');
 
@@ -25,10 +28,6 @@
   const userEmailText = document.getElementById('userEmailText');
   const btnLogout = document.getElementById('btnLogout');
   const btnSettings = document.getElementById('btnSettings');
-
-  const setupForm = document.getElementById('setupForm');
-  const setupUrl = document.getElementById('setupUrl');
-  const setupKey = document.getElementById('setupKey');
 
   const loginForm = document.getElementById('loginForm');
   const loginEmail = document.getElementById('loginEmail');
@@ -109,15 +108,10 @@
   function init() {
     setupEventListeners();
 
-    // Check credentials from localStorage or SHOP_CONFIG
-    const storedUrl = localStorage.getItem('toc_supabase_url') || (window.SHOP_CONFIG && SHOP_CONFIG.supabase && SHOP_CONFIG.supabase.url);
-    const storedKey = localStorage.getItem('toc_supabase_key') || (window.SHOP_CONFIG && SHOP_CONFIG.supabase && SHOP_CONFIG.supabase.anonKey);
+    const storedUrl = TOC_SUPABASE_URL || localStorage.getItem('toc_supabase_url') || (window.SHOP_CONFIG && SHOP_CONFIG.supabase && SHOP_CONFIG.supabase.url);
+    const storedKey = TOC_SUPABASE_KEY || localStorage.getItem('toc_supabase_key') || (window.SHOP_CONFIG && SHOP_CONFIG.supabase && SHOP_CONFIG.supabase.anonKey);
 
-    if (storedUrl && storedKey && storedUrl.startsWith('http')) {
-      initializeSupabase(storedUrl, storedKey);
-    } else {
-      showSetupScreen();
-    }
+    initializeSupabase(storedUrl, storedKey);
   }
 
   function initializeSupabase(url, key) {
@@ -128,15 +122,12 @@
       }
 
       supabaseClient = window.supabase.createClient(url, key);
-      localStorage.setItem('toc_supabase_url', url);
-      localStorage.setItem('toc_supabase_key', key);
-
       updateConnectionStatus(true);
       checkAuthSession();
     } catch (err) {
       console.error('Supabase Init Error:', err);
       updateConnectionStatus(false);
-      showSetupScreen();
+      showLoginScreen();
     }
   }
 
@@ -225,26 +216,16 @@
 
   // ==================== SCREEN NAVIGATION ====================
 
-  function showSetupScreen() {
-    setupSection.style.display = 'flex';
-    loginSection.style.display = 'none';
-    dashboardSection.style.display = 'none';
-    userBadge.style.display = 'none';
-    btnLogout.style.display = 'none';
-  }
-
   function showLoginScreen() {
-    setupSection.style.display = 'none';
-    loginSection.style.display = 'flex';
-    dashboardSection.style.display = 'none';
-    userBadge.style.display = 'none';
-    btnLogout.style.display = 'none';
+    if (loginSection) loginSection.style.display = 'flex';
+    if (dashboardSection) dashboardSection.style.display = 'none';
+    if (userBadge) userBadge.style.display = 'none';
+    if (btnLogout) btnLogout.style.display = 'none';
   }
 
   function showDashboard() {
-    setupSection.style.display = 'none';
-    loginSection.style.display = 'none';
-    dashboardSection.style.display = 'block';
+    if (loginSection) loginSection.style.display = 'none';
+    if (dashboardSection) dashboardSection.style.display = 'block';
 
     if (currentUser) {
       userBadge.style.display = 'flex';
@@ -893,17 +874,6 @@
       initializeSupabase(url, key);
       closeModal(settingsModal);
       showToast('ترتیبات کامیابی سے محفوظ ہو گئیں۔', 'success');
-    }
-  });
-
-  setupForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const url = setupUrl.value.trim();
-    const key = setupKey.value.trim();
-
-    if (url && key) {
-      initializeSupabase(url, key);
-      showToast('کنکشن قائم کرنے کی کوشش کی جا رہی ہے...', 'success');
     }
   });
 
